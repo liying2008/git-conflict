@@ -1,0 +1,51 @@
+<idea-plugin>
+    <id>cc.duduhuo.git-conflict</id>
+    <name>Plugin display name here</name>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="131"/>
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+    </extensions>
+    <actions>
+        <action id="GitConflict.Highlight" class="cc.duduhuo.git.conflict.action.HighlightConflictAction"
+                text="Highlight Git Conflict"
+                description="Show git conflict content.">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="GitConflict.Operation.Group"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt G"/>
+        </action>
+        <action id="GitConflict.Cancel" class="cc.duduhuo.git.conflict.action.CancelConflictAction"
+                text="Cancel Highlight Git Conflict" description="Cancel highlight git conflict">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="GitConflict.Operation.Group"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl G"/>
+        </action>
+        <group id="GitConflict.Operation.Group" class="cc.duduhuo.git.conflict.action.ConflictOpActionGroup"
+               popup="true"
+               text="Resolve Git Conflict" description="Resolve git conflict">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <action id="GitConflict.Operation.CurrentChange"
+                    class="cc.duduhuo.git.conflict.action.operation.AcceptCurrentChangeAction"
+                    text="Accept Current Change" description="Accept current change">
+            </action>
+            <action id="GitConflict.Operation.IncomingChange"
+                    class="cc.duduhuo.git.conflict.action.operation.AcceptIncomingChangeAction"
+                    text="Accept Incoming Change" description="Accept incoming change">
+            </action>
+            <action id="GitConflict.Operation.BothChanges"
+                    class="cc.duduhuo.git.conflict.action.operation.AcceptBothChangesAction"
+                    text="Accept Both Changes" description="Accept both changes">
+            </action>
+        </group>
+
+    </actions>
+</idea-plugin>

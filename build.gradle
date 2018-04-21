@@ -1,0 +1,34 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.3.1'
+}
+
+group = 'cc.duduhuo'
+version = '0.0.1'
+def name = 'git-conflict'
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+intellij {
+    version = '2018.1.1'
+    publish {
+        pluginId name
+        apply from: "local.properties"
+        intellij.updateSinceUntilBuild false
+    }
+}
+patchPluginXml {
+    changeNotes """
+      The first release."""
+}
