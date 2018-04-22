@@ -1,5 +1,7 @@
 package cc.duduhuo.git.conflict;
 
+import com.intellij.openapi.editor.markup.HighlighterLayer;
+
 /**
  * =======================================================
  * Author: liying - liruoer2008@yeah.net
@@ -13,5 +15,7 @@ public interface Constants {
     String SEPARATOR = "=======";
     String INCOMING_CHANGE = ">>>>>>> ";
 
-    int HIGHLIGHTER_LAYER = 7000;
+    int HIGHLIGHTER_LAYER = HighlighterLayer.SELECTION - 1;
+
+    String GROUP_DISPLAY_ID = "Git Conflict";
 }

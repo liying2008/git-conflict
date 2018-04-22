@@ -1,12 +1,11 @@
 <idea-plugin>
     <id>cc.duduhuo.git-conflict</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <name>Git Conflict</name>
+    <vendor email="liruoer2008@yeah.net" url="https://github.com/liying2008/git-conflict">liying</vendor>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="131"/>
+    <idea-version since-build="162"/>
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Highlight <span style="font-weight:bold;"><em>git conflict</em></span> content and <em>fix</em> conflicts more conveniently.
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -31,7 +30,7 @@
         </action>
         <group id="GitConflict.Operation.Group" class="cc.duduhuo.git.conflict.action.ConflictOpActionGroup"
                popup="true"
-               text="Resolve Git Conflict" description="Resolve git conflict">
+               text="Fix Git Conflict" description="Fix git conflict">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <action id="GitConflict.Operation.CurrentChange"
                     class="cc.duduhuo.git.conflict.action.operation.AcceptCurrentChangeAction"

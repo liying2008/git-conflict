@@ -1,7 +1,13 @@
 package cc.duduhuo.git.conflict.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
+
+import static cc.duduhuo.git.conflict.Global.sIsHighlightMap;
 
 /**
  * =======================================================
@@ -14,6 +20,18 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 public class ConflictOpActionGroup extends DefaultActionGroup {
     @Override
     public void update(AnActionEvent e) {
-        super.update(e);
+        //Get required data keys
+        final Project project = e.getProject();
+        final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        //Set visibility only in case of existing project and editor
+        e.getPresentation().setVisible(false);
+        boolean canShow = (project != null && editor != null);
+        if (canShow) {
+            Document document = editor.getDocument();
+            Boolean isHighlight = sIsHighlightMap.getOrDefault(document, false);
+            if (isHighlight) {
+                e.getPresentation().setVisible(true);
+            }
+        }
     }
 }

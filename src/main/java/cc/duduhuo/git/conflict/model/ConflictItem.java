@@ -12,6 +12,8 @@ public class ConflictItem {
     private int currentChangeLineNum = -1;
     private int separatorLineNum = -1;
     private int incomingLineNum = -1;
+    private String currentChangeStr;
+    private String incomingChangeStr;
 
     public ConflictItem() {
     }
@@ -44,5 +46,32 @@ public class ConflictItem {
 
     public void setIncomingLineNum(int incomingLineNum) {
         this.incomingLineNum = incomingLineNum;
+    }
+
+    public String getCurrentChangeStr() {
+        return currentChangeStr;
+    }
+
+    public void setCurrentChangeStr(String currentChangeStr) {
+        this.currentChangeStr = currentChangeStr;
+    }
+
+    public String getIncomingChangeStr() {
+        return incomingChangeStr;
+    }
+
+    public void setIncomingChangeStr(String incomingChangeStr) {
+        this.incomingChangeStr = incomingChangeStr;
+    }
+
+    @Override
+    public String toString() {
+        return "ConflictItem{" +
+            "currentChangeLineNum=" + currentChangeLineNum +
+            ", separatorLineNum=" + separatorLineNum +
+            ", incomingLineNum=" + incomingLineNum +
+            ", currentChangeStr='" + currentChangeStr + '\'' +
+            ", incomingChangeStr='" + incomingChangeStr + '\'' +
+            '}';
     }
 }
