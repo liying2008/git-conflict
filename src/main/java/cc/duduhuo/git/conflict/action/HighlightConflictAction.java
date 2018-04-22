@@ -6,7 +6,6 @@ import cc.duduhuo.git.conflict.InDocumentListener;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.markup.MarkupModel;
@@ -24,17 +23,18 @@ import static cc.duduhuo.git.conflict.Global.sIsHighlightMap;
  * =======================================================
  */
 public class HighlightConflictAction extends AnAction {
-
+    private static Document sDocument;
+    private static MarkupModel sMarkupModel;
 
     @Override
     public void actionPerformed(AnActionEvent e) {
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
-        final Project project = e.getProject();
 
         final Document document = editor.getDocument();
         sIsHighlightMap.put(document, true);
         final MarkupModel markupModel = editor.getMarkupModel();
-        final CaretModel caretModel = editor.getCaretModel();
+        sDocument = document;
+        sMarkupModel = markupModel;
         DocumentTools.showConflict(document, markupModel);
 
         InDocumentListener oldListener = sDocumentListenerMap.get(document);
@@ -45,6 +45,11 @@ public class HighlightConflictAction extends AnAction {
         }
     }
 
+    public static void refreshHighlight() {
+        if (sDocument != null && sMarkupModel != null && sIsHighlightMap.get(sDocument)) {
+            DocumentTools.showConflict(sDocument, sMarkupModel);
+        }
+    }
 
     @Override
     public void update(AnActionEvent e) {

@@ -8,7 +8,7 @@ package cc.duduhuo.git.conflict.model;
  * Remarks:
  * =======================================================
  */
-public class ConflictItem {
+public final class ConflictItem {
     private int currentChangeLineNum = -1;
     private int separatorLineNum = -1;
     private int incomingLineNum = -1;

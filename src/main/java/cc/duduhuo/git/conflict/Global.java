@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict;
 
 import cc.duduhuo.git.conflict.model.ConflictItem;
+import cc.duduhuo.git.conflict.model.MarkColor;
 import com.intellij.openapi.editor.Document;
 
 import java.util.HashMap;
@@ -21,4 +22,6 @@ public final class Global {
     // conflict item list
     public static Map<Document, List<ConflictItem>> sConflictItemMap = new HashMap<>();
     public static Map<Document, InDocumentListener> sDocumentListenerMap = new HashMap<>();
+    // current color scheme
+    public static MarkColor sCurrentColor = GlobalSettings.getMarkColor();
 }

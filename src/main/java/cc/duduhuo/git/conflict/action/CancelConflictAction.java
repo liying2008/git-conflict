@@ -26,7 +26,6 @@ public class CancelConflictAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
-        final Project project = e.getProject();
         final Document document = editor.getDocument();
         sIsHighlightMap.put(document, false);
         sConflictItemMap.remove(document);

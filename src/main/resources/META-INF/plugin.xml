@@ -15,6 +15,12 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable groupId="tools"
+                                 id="cc.duduhuo.git.conflict.applicationConfigurable"
+                                 instance="cc.duduhuo.git.conflict.setting.ColorSettingsPanelImpl"/>
+        <applicationService
+                serviceInterface="cc.duduhuo.git.conflict.setting.SettingsService"
+                serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsServiceImpl"/>
     </extensions>
     <actions>
         <action id="GitConflict.Highlight" class="cc.duduhuo.git.conflict.action.HighlightConflictAction"
@@ -45,6 +51,5 @@
                     text="Accept Both Changes" description="Accept both changes">
             </action>
         </group>
-
     </actions>
 </idea-plugin>

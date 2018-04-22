@@ -17,5 +17,8 @@ public interface Constants {
 
     int HIGHLIGHTER_LAYER = HighlighterLayer.SELECTION - 1;
 
-    String GROUP_DISPLAY_ID = "Git Conflict";
+    interface BundleKey {
+        String GROUP_DISPLAY_ID = "notification.group.display.id";
+        String SETTINGS_TITLE = "settings.title";
+    }
 }

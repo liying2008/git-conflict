@@ -2,7 +2,6 @@ package cc.duduhuo.git.conflict;
 
 import cc.duduhuo.git.conflict.model.ConflictItem;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.RangeMarker;
 import com.intellij.openapi.editor.markup.MarkupModel;
 import com.intellij.openapi.util.TextRange;
 
@@ -19,13 +18,14 @@ import static cc.duduhuo.git.conflict.Global.sConflictItemMap;
  * Remarks:
  * =======================================================
  */
-public class DocumentTools {
+public final class DocumentTools {
     public static void showConflict(final Document document, final MarkupModel markupModel) {
-        int lineCount = document.getLineCount();
         String text = document.getText();
         String[] textArr = text.split("\n");
+        int lineCount = textArr.length;
 
         markupModel.removeAllHighlighters();
+        sConflictItemMap.remove(document);
 
         int currentChangeLineNum = -1;
         int separatorLineNum = -1;

@@ -1,5 +1,6 @@
 package cc.duduhuo.git.conflict.action.operation;
 
+import cc.duduhuo.git.conflict.BundleTools;
 import cc.duduhuo.git.conflict.Constants;
 import cc.duduhuo.git.conflict.Global;
 import cc.duduhuo.git.conflict.model.ConflictItem;
@@ -47,10 +48,11 @@ public class AcceptIncomingChangeAction extends AnAction {
                     WriteCommandAction.runWriteCommandAction(project, () ->
                         document.replaceString(start, end, replaceStr)
                     );
+                    break;
                 }
             }
         } else {
-            Notification notification = new Notification(Constants.GROUP_DISPLAY_ID, "Fix Git Conflict", "This document can not be written.", NotificationType.WARNING);
+            Notification notification = new Notification(BundleTools.getValue(Constants.BundleKey.GROUP_DISPLAY_ID), "Fix Git Conflict", "This document can not be written.", NotificationType.WARNING);
             Notifications.Bus.notify(notification);
         }
     }
