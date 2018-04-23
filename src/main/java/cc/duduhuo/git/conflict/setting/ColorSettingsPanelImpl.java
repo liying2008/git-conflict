@@ -2,7 +2,6 @@ package cc.duduhuo.git.conflict.setting;
 
 import cc.duduhuo.git.conflict.*;
 import cc.duduhuo.git.conflict.action.HighlightConflictAction;
-import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,19 +17,16 @@ import javax.swing.*;
  * =======================================================
  */
 public class ColorSettingsPanelImpl extends ColorSettingsPanel {
+
     public ColorSettingsPanelImpl() {
         initUI();
     }
 
     private void initUI() {
-        radioDefault.setSelected(false);
-        radioDarcula.setSelected(false);
         if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT)) {
-            System.out.println("default==");
-            radioDefault.setSelected(true);
+            cbColorScheme.setSelectedItem(DEFAULT);
         } else if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA)) {
-            System.out.println("darcula==");
-            radioDarcula.setSelected(true);
+            cbColorScheme.setSelectedItem(DARCULA);
         }
     }
 
@@ -54,9 +50,9 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
     @Override
     public boolean isModified() {
-        if (radioDefault.isSelected()) {
+        if (cbColorScheme.getSelectedItem() == DEFAULT) {
             return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT);
-        } else if (radioDarcula.isSelected()) {
+        } else if (cbColorScheme.getSelectedItem() == DARCULA) {
             return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA);
         }
         return false;
@@ -64,18 +60,15 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
     @Override
     public void reset() {
-        radioDefault.setSelected(true);
-        radioDarcula.setSelected(false);
-//        GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DEFAULT);
     }
 
     @Override
     public void apply() {
         boolean isModified = isModified();
-        if (radioDefault.isSelected()) {
+        if (cbColorScheme.getSelectedItem() == DEFAULT) {
             GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DEFAULT);
             Global.sCurrentColor = SettingsService.ColorSettings.DEFAULT;
-        } else if (radioDarcula.isSelected()) {
+        } else if (cbColorScheme.getSelectedItem() == DARCULA) {
             GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DARCULA);
             Global.sCurrentColor = SettingsService.ColorSettings.DARCULA;
         }

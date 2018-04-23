@@ -22,13 +22,13 @@ public class SettingsServiceImpl implements SettingsService, PersistentStateComp
     @Nullable
     @Override
     public MarkColor getState() {
-        System.out.println("getState()");
+        //System.out.println("getState()");
         return XmlSerializerUtil.createCopy(markColor);
     }
 
     @Override
     public void loadState(@NotNull MarkColor markColor) {
-        System.out.println("loadState()");
+        //System.out.println("loadState()");
         XmlSerializerUtil.copyBean(markColor, this.markColor);
     }
 }
