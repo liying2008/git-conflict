@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'cc.duduhuo'
-version = '0.0.1'
+version = '0.0.1-rc'
 def name = 'git-conflict'
 
 apply plugin: 'idea'
@@ -24,12 +24,13 @@ intellij {
     version = '2018.1.1'
     publish {
         pluginId name
-        apply from: "local.properties"
+        if (file("local.properties").exists()) {
+            apply from: "local.properties"
+        }
         intellij.updateSinceUntilBuild false
     }
 }
 patchPluginXml {
-    changeNotes """
-      Highlight <span style="font-weight:bold;"><em>git conflict</em></span> content and <em>fix</em> conflicts more conveniently.
-      """
+    pluginDescription(file("description.html").text)
+    changeNotes(file("changeNotes.html").text)
 }

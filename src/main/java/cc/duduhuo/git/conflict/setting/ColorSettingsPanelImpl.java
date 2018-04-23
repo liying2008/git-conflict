@@ -17,21 +17,20 @@ import javax.swing.*;
  * Remarks:
  * =======================================================
  */
-public class ColorSettingsPanelImpl extends ColorSettingsPanel implements SearchableConfigurable {
+public class ColorSettingsPanelImpl extends ColorSettingsPanel {
     public ColorSettingsPanelImpl() {
-        super();
         initUI();
     }
 
     private void initUI() {
-        this.radioDefault.setSelected(false);
-        this.radioDarcula.setSelected(false);
+        radioDefault.setSelected(false);
+        radioDarcula.setSelected(false);
         if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT)) {
             System.out.println("default==");
-            this.radioDefault.setSelected(true);
+            radioDefault.setSelected(true);
         } else if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA)) {
             System.out.println("darcula==");
-            this.radioDarcula.setSelected(true);
+            radioDarcula.setSelected(true);
         }
     }
 
@@ -50,14 +49,14 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel implements Search
     @Nullable
     @Override
     public JComponent createComponent() {
-        return this.mainPanel;
+        return mainPanel;
     }
 
     @Override
     public boolean isModified() {
-        if (this.radioDefault.isSelected()) {
+        if (radioDefault.isSelected()) {
             return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT);
-        } else if (this.radioDarcula.isSelected()) {
+        } else if (radioDarcula.isSelected()) {
             return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA);
         }
         return false;
@@ -72,6 +71,7 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel implements Search
 
     @Override
     public void apply() {
+        boolean isModified = isModified();
         if (radioDefault.isSelected()) {
             GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DEFAULT);
             Global.sCurrentColor = SettingsService.ColorSettings.DEFAULT;
@@ -79,7 +79,9 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel implements Search
             GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DARCULA);
             Global.sCurrentColor = SettingsService.ColorSettings.DARCULA;
         }
-        TextAttr.loadTextAttr();
-        HighlightConflictAction.refreshHighlight();
+        if (isModified) {
+            TextAttr.loadTextAttr();
+            HighlightConflictAction.refreshHighlight();
+        }
     }
 }

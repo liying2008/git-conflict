@@ -4,9 +4,6 @@
     <vendor email="liruoer2008@yeah.net" url="https://github.com/liying2008/git-conflict">liying</vendor>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="162"/>
-    <description><![CDATA[
-    Highlight <span style="font-weight:bold;"><em>git conflict</em></span> content and <em>fix</em> conflicts more conveniently.
-    ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->

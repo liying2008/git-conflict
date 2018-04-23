@@ -1,5 +1,7 @@
 package cc.duduhuo.git.conflict.setting;
 
+import com.intellij.openapi.options.SearchableConfigurable;
+
 import javax.swing.*;
 
 /**
@@ -10,7 +12,7 @@ import javax.swing.*;
  * Remarks:
  * =======================================================
  */
-public abstract class ColorSettingsPanel {
+public abstract class ColorSettingsPanel implements SearchableConfigurable {
     protected JRadioButton radioDefault;
     protected JRadioButton radioDarcula;
     protected JPanel mainPanel;
