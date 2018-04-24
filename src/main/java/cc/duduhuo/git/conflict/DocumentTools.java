@@ -2,6 +2,7 @@ package cc.duduhuo.git.conflict;
 
 import cc.duduhuo.git.conflict.model.ConflictItem;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.markup.MarkupModel;
 import com.intellij.openapi.util.TextRange;
 
@@ -19,7 +20,9 @@ import static cc.duduhuo.git.conflict.Global.sConflictItemMap;
  * =======================================================
  */
 public final class DocumentTools {
-    public static void showConflict(final Document document, final MarkupModel markupModel) {
+    public static void showConflict(final Editor editor) {
+        final Document document = editor.getDocument();
+        final MarkupModel markupModel = editor.getMarkupModel();
         String text = document.getText();
         String[] textArr = text.split("\n");
         int lineCount = textArr.length;

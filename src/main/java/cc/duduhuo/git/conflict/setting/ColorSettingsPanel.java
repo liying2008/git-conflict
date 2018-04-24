@@ -14,13 +14,14 @@ import javax.swing.*;
  * =======================================================
  */
 public abstract class ColorSettingsPanel implements SearchableConfigurable {
-    protected static final String DEFAULT = "Default";
+    protected static final String AUTO = "Auto";
+    protected static final String INTELLIJ = "IntelliJ";
     protected static final String DARCULA = "Darcula";
     protected JPanel mainPanel;
     protected ComboBox<String> cbColorScheme;
 
     private void createUIComponents() {
-        String[] schemes = new String[]{DEFAULT, DARCULA};
+        String[] schemes = new String[]{AUTO, INTELLIJ, DARCULA};
         cbColorScheme = new ComboBox<>(schemes);
     }
 }

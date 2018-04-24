@@ -1,5 +1,8 @@
 # git-conflict
 
+
+![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/10656-git-conflict.svg)
+![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/10656-git-conflict.svg)
 [![GitHub release](https://img.shields.io/github/release/liying2008/git-conflict.svg)](https://github.com/liying2008/git-conflict/releases)
 [![license](https://img.shields.io/github/license/liying2008/git-conflict.svg)](https://github.com/liying2008/git-conflict/blob/master/LICENSE)
 
@@ -7,8 +10,9 @@
 
 ## How to Install
 
-- 在 [GitHub Releases](https://github.com/liying2008/git-conflict/releases) 页面下载最新的 `jar` 包，然后通过 `Settings -> Plugins -> Install plugin from disk..` 选择下载的 `jar` 包安装。
+- 在 [GitHub Releases](https://github.com/liying2008/git-conflict/releases) 页面下载最新的 `jar` 包，然后通过 `Settings -> Plugins -> Install plugin from disk..` 选择下载的 `jar` 包安装；
 
+- 或者在 `Settings -> Plugins -> Browse repositories..` 界面搜索 `Git Conflict` 。
 
 ## How to Use
 

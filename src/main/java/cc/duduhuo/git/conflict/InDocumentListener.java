@@ -1,9 +1,8 @@
 package cc.duduhuo.git.conflict;
 
-import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
-import com.intellij.openapi.editor.markup.MarkupModel;
 
 /**
  * =======================================================
@@ -14,17 +13,15 @@ import com.intellij.openapi.editor.markup.MarkupModel;
  * =======================================================
  */
 public final class InDocumentListener implements DocumentListener {
-    private Document mDocument;
-    private MarkupModel mMarkupModel;
+    private Editor mEditor;
 
-    public InDocumentListener(Document document, MarkupModel markupModel) {
-        this.mDocument = document;
-        this.mMarkupModel = markupModel;
+    public InDocumentListener(Editor editor) {
+        this.mEditor = editor;
     }
 
     @Override
     public void documentChanged(DocumentEvent event) {
-        DocumentTools.showConflict(mDocument, mMarkupModel);
+        DocumentTools.showConflict(mEditor);
     }
 }
 

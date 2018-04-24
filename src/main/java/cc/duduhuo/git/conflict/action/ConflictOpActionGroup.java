@@ -3,7 +3,6 @@ package cc.duduhuo.git.conflict.action;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 
@@ -27,8 +26,7 @@ public class ConflictOpActionGroup extends DefaultActionGroup {
         e.getPresentation().setVisible(false);
         boolean canShow = (project != null && editor != null);
         if (canShow) {
-            Document document = editor.getDocument();
-            Boolean isHighlight = sIsHighlightMap.getOrDefault(document, false);
+            Boolean isHighlight = sIsHighlightMap.getOrDefault(editor, false);
             if (isHighlight) {
                 e.getPresentation().setVisible(true);
             }

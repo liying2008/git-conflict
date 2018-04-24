@@ -27,7 +27,7 @@ public class CancelConflictAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
         final Document document = editor.getDocument();
-        sIsHighlightMap.put(document, false);
+        sIsHighlightMap.put(editor, false);
         sConflictItemMap.remove(document);
         final MarkupModel markupModel = editor.getMarkupModel();
         markupModel.removeAllHighlighters();
@@ -48,8 +48,7 @@ public class CancelConflictAction extends AnAction {
         e.getPresentation().setVisible(false);
         boolean canShow = (project != null && editor != null);
         if (canShow) {
-            Document document = editor.getDocument();
-            Boolean isHighlight = sIsHighlightMap.getOrDefault(document, false);
+            Boolean isHighlight = sIsHighlightMap.getOrDefault(editor, false);
             if (isHighlight) {
                 e.getPresentation().setVisible(true);
             }

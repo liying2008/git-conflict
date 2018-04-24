@@ -23,8 +23,10 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
     }
 
     private void initUI() {
-        if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT)) {
-            cbColorScheme.setSelectedItem(DEFAULT);
+        if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.AUTO)) {
+            cbColorScheme.setSelectedItem(AUTO);
+        } else if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.INTELLIJ)) {
+            cbColorScheme.setSelectedItem(INTELLIJ);
         } else if (GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA)) {
             cbColorScheme.setSelectedItem(DARCULA);
         }
@@ -50,8 +52,10 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
     @Override
     public boolean isModified() {
-        if (cbColorScheme.getSelectedItem() == DEFAULT) {
-            return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DEFAULT);
+        if (cbColorScheme.getSelectedItem() == AUTO) {
+            return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.AUTO);
+        } else if (cbColorScheme.getSelectedItem() == INTELLIJ) {
+            return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.INTELLIJ);
         } else if (cbColorScheme.getSelectedItem() == DARCULA) {
             return !GlobalSettings.getMarkColor().equals(SettingsService.ColorSettings.DARCULA);
         }
@@ -65,9 +69,12 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
     @Override
     public void apply() {
         boolean isModified = isModified();
-        if (cbColorScheme.getSelectedItem() == DEFAULT) {
-            GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DEFAULT);
-            Global.sCurrentColor = SettingsService.ColorSettings.DEFAULT;
+        if (cbColorScheme.getSelectedItem() == AUTO) {
+            GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.AUTO);
+            Global.sCurrentColor = SettingsService.ColorSettings.AUTO;
+        } else if (cbColorScheme.getSelectedItem() == INTELLIJ) {
+            GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.INTELLIJ);
+            Global.sCurrentColor = SettingsService.ColorSettings.INTELLIJ;
         } else if (cbColorScheme.getSelectedItem() == DARCULA) {
             GlobalSettings.getMarkColor().setMarkColor(SettingsService.ColorSettings.DARCULA);
             Global.sCurrentColor = SettingsService.ColorSettings.DARCULA;
