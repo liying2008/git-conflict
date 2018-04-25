@@ -1,6 +1,6 @@
 package cc.duduhuo.git.conflict.setting;
 
-import cc.duduhuo.git.conflict.model.MarkColor;
+import cc.duduhuo.git.conflict.model.PersistentState;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -17,18 +17,22 @@ import org.jetbrains.annotations.Nullable;
  * =======================================================
  */
 @State(name = "GitConflict",
-    storages = {@Storage(value = "cc.duduhuo.git.conflict.applicationConfigurable.xml")})
-public class SettingsServiceImpl implements SettingsService, PersistentStateComponent<MarkColor> {
+    storages = {@Storage(value = "cc.duduhuo.git.conflict.1.applicationConfigurable.xml")})
+public class SettingsServiceImpl implements SettingsService, PersistentStateComponent<PersistentState> {
     @Nullable
     @Override
-    public MarkColor getState() {
-        //System.out.println("getState()");
-        return XmlSerializerUtil.createCopy(markColor);
+    public PersistentState getState() {
+        return XmlSerializerUtil.createCopy(state);
     }
 
     @Override
-    public void loadState(@NotNull MarkColor markColor) {
-        //System.out.println("loadState()");
-        XmlSerializerUtil.copyBean(markColor, this.markColor);
+    public void loadState(@NotNull PersistentState state) {
+        XmlSerializerUtil.copyBean(state, this.state);
+    }
+
+    @Override
+    public void noStateLoaded() {
+        PersistentState state = new PersistentState();
+        loadState(state);
     }
 }
