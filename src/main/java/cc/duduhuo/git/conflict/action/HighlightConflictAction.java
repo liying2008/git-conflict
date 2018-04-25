@@ -44,7 +44,9 @@ public class HighlightConflictAction extends AnAction {
     public static void refreshHighlight() {
         Set<Editor> keySet = Global.sIsHighlightMap.keySet();
         for (Editor editor : keySet) {
-            DocumentTools.showConflict(editor);
+            if (Global.sIsHighlightMap.get(editor)) {
+                DocumentTools.showConflict(editor);
+            }
         }
     }
 
