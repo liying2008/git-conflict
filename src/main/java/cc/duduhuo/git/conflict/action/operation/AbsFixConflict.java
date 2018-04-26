@@ -1,7 +1,7 @@
 package cc.duduhuo.git.conflict.action.operation;
 
 import android.support.annotation.IntDef;
-import cc.duduhuo.git.conflict.BundleTools;
+import cc.duduhuo.git.conflict.tool.BundleTools;
 import cc.duduhuo.git.conflict.Constants;
 import cc.duduhuo.git.conflict.Global;
 import cc.duduhuo.git.conflict.model.ConflictItem;

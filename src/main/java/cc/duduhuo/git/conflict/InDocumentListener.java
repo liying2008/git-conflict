@@ -1,5 +1,6 @@
 package cc.duduhuo.git.conflict;
 
+import cc.duduhuo.git.conflict.tool.DocumentTools;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;

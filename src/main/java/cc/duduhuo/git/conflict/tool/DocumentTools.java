@@ -1,5 +1,7 @@
-package cc.duduhuo.git.conflict;
+package cc.duduhuo.git.conflict.tool;
 
+import cc.duduhuo.git.conflict.Constants;
+import cc.duduhuo.git.conflict.TextAttr;
 import cc.duduhuo.git.conflict.model.ConflictItem;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;

@@ -1,6 +1,6 @@
 package cc.duduhuo.git.conflict.action;
 
-import cc.duduhuo.git.conflict.DocumentTools;
+import cc.duduhuo.git.conflict.tool.DocumentTools;
 import cc.duduhuo.git.conflict.Global;
 import cc.duduhuo.git.conflict.InDocumentListener;
 import com.intellij.openapi.actionSystem.AnAction;
