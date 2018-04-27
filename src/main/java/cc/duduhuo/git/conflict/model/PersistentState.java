@@ -12,19 +12,19 @@ import cc.duduhuo.git.conflict.BuiltInColor;
  * Remarks:
  * =======================================================
  */
-public class PersistentState {
-    String mSchemeName;
-    Map<String, MarkColor> mMarkColors;
+public final class PersistentState {
+    private String mSchemeName;
+    private LinkedHashMap<String, MarkColor> mMarkColors;
 
     public PersistentState() {
         mSchemeName = BuiltInColor.DEFAULT_SCHEME;
-        mMarkColors = new HashMap<>();
+        mMarkColors = new LinkedHashMap<>();
         mMarkColors.put(BuiltInColor.AUTO_SCHEME_NAME, BuiltInColor.AUTO);
         mMarkColors.put(BuiltInColor.INTELLIJ_SCHEME_NAME, BuiltInColor.INTELLIJ);
         mMarkColors.put(BuiltInColor.DARCULA_SCHEME_NAME, BuiltInColor.DARCULA);
     }
 
-    public PersistentState(String schemeName, Map<String, MarkColor> markColors) {
+    public PersistentState(String schemeName, LinkedHashMap<String, MarkColor> markColors) {
         this.mSchemeName = schemeName;
         this.mMarkColors = markColors;
     }
@@ -37,11 +37,11 @@ public class PersistentState {
         mSchemeName = schemeName;
     }
 
-    public Map<String, MarkColor> getMarkColors() {
+    public LinkedHashMap<String, MarkColor> getMarkColors() {
         return mMarkColors;
     }
 
-    public void setMarkColors(Map<String, MarkColor> markColors) {
+    public void setMarkColors(LinkedHashMap<String, MarkColor> markColors) {
         mMarkColors = markColors;
     }
 

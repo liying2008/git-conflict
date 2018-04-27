@@ -1,9 +1,7 @@
 package cc.duduhuo.git.conflict.setting;
 
+import cc.duduhuo.git.conflict.*;
 import cc.duduhuo.git.conflict.tool.BundleTools;
-import cc.duduhuo.git.conflict.Constants;
-import cc.duduhuo.git.conflict.GlobalSettings;
-import cc.duduhuo.git.conflict.TextAttr;
 import cc.duduhuo.git.conflict.action.HighlightConflictAction;
 import cc.duduhuo.git.conflict.model.MarkColor;
 import cc.duduhuo.git.conflict.model.PersistentState;
@@ -16,10 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * =======================================================
@@ -30,7 +26,8 @@ import java.util.Set;
  * =======================================================
  */
 public class ColorSettingsPanelImpl extends ColorSettingsPanel {
-    private Map<String, MarkColor> mMarkColors;
+    private MarkColor mOldMarkColor = new MarkColor();
+    private LinkedHashMap<String, MarkColor> mMarkColors;
     private String mSchemeName;
     private List<String> mAllSchemeNames = new ArrayList<>();
 
@@ -52,7 +49,7 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
             }
         });
         btnNew.addActionListener(e -> {
-            String newSchemeName = JOptionPane.showInputDialog(mainPanel, "Please input new scheme name");
+            String newSchemeName = JOptionPane.showInputDialog(mainPanel, "Please input new scheme name: ");
             if (newSchemeName == null) {
                 return;
             }
@@ -66,26 +63,30 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
             }
             lbCurrentContent.setText("0x000000");
             lbCurrentTitle.setText("0x000000");
-            lbIncomingContent.setText("0x000000");
-            lbIncomingTitle.setText("0x000000");
+            lbIncomingContent.setText("0xffffff");
+            lbIncomingTitle.setText("0xffffff");
             cCurrentColor.setBackground(JBColor.BLACK);
             cCurrentTitleColor.setBackground(JBColor.BLACK);
-            cIncomingColor.setBackground(JBColor.BLACK);
-            cIncomingTitleColor.setBackground(JBColor.BLACK);
+            cIncomingColor.setBackground(JBColor.WHITE);
+            cIncomingTitleColor.setBackground(JBColor.WHITE);
             mAllSchemeNames.add(newSchemeName);
             cbColorScheme.addItem(newSchemeName);
             cbColorScheme.setSelectedItem(newSchemeName);
-            MarkColor markColor = new MarkColor(newSchemeName, false, 0, 0, 0, 0);
+            MarkColor markColor = new MarkColor(newSchemeName, false, 0x000000,
+                0x000000, 0xffffff, 0xffffff);
             // add to markColor map
             mMarkColors.put(newSchemeName, markColor);
             updateUI(markColor);
         });
         btnDelete.addActionListener(e -> {
             String selectedItem = (String) cbColorScheme.getSelectedItem();
-            mMarkColors.remove(selectedItem);
-            cbColorScheme.removeItem(selectedItem);
-            mAllSchemeNames.remove(selectedItem);
-            updateUI(mMarkColors.get((String) cbColorScheme.getSelectedItem()));
+            int confirm = JOptionPane.showConfirmDialog(mainPanel, "Delete scheme: " + selectedItem + " ?", "Delete", JOptionPane.OK_CANCEL_OPTION);
+            if (confirm == JOptionPane.OK_OPTION) {
+                mMarkColors.remove(selectedItem);
+                cbColorScheme.removeItem(selectedItem);
+                mAllSchemeNames.remove(selectedItem);
+                updateUI(mMarkColors.get((String) cbColorScheme.getSelectedItem()));
+            }
         });
     }
 
@@ -93,17 +94,24 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         PersistentState persistentState = GlobalSettings.getPersistentState();
         mMarkColors = persistentState.getMarkColors();
         mSchemeName = persistentState.getSchemeName();
-        MarkColor currentColor;
         String name;
+        // make sure the built-in color is displayed at the top.
+        cbColorScheme.addItem(BuiltInColor.AUTO_SCHEME_NAME);
+        cbColorScheme.addItem(BuiltInColor.INTELLIJ_SCHEME_NAME);
+        cbColorScheme.addItem(BuiltInColor.DARCULA_SCHEME_NAME);
         Set<String> keySet = mMarkColors.keySet();
         for (String key : keySet) {
             name = mMarkColors.get(key).getSchemeName();
-            cbColorScheme.addItem(name);
+            if (!name.equals(BuiltInColor.AUTO_SCHEME_NAME) &&
+                !name.equals(BuiltInColor.INTELLIJ_SCHEME_NAME) &&
+                !name.equals(BuiltInColor.DARCULA_SCHEME_NAME)) {
+                cbColorScheme.addItem(name);
+            }
             mAllSchemeNames.add(name);
         }
         cbColorScheme.setSelectedItem(mSchemeName);
-        currentColor = mMarkColors.get(mSchemeName);
-        updateUI(currentColor);
+        mOldMarkColor.copy(mMarkColors.get(mSchemeName));
+        updateUI(mOldMarkColor);
     }
 
     private void updateUI(MarkColor color) {
@@ -124,9 +132,9 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         lbIncomingContent.setText(Tools.int2HexString(color.getIncomingColor()));
         lbIncomingTitle.setText(Tools.int2HexString(color.getIncomingTitleColor()));
         cCurrentColor.setBackground(new JBColor(color.getCurrentColor(), color.getCurrentColor()));
-        cCurrentTitleColor.setBackground(new JBColor(new Color(color.getCurrentTitleColor()), new Color(color.getCurrentTitleColor())));
-        cIncomingColor.setBackground(new JBColor(new Color(color.getIncomingColor()), new Color(color.getIncomingColor())));
-        cIncomingTitleColor.setBackground(new JBColor(new Color(color.getIncomingTitleColor()), new Color(color.getIncomingTitleColor())));
+        cCurrentTitleColor.setBackground(new JBColor(color.getCurrentTitleColor(), color.getCurrentTitleColor()));
+        cIncomingColor.setBackground(new JBColor(color.getIncomingColor(), color.getIncomingColor()));
+        cIncomingTitleColor.setBackground(new JBColor(color.getIncomingTitleColor(), color.getIncomingTitleColor()));
     }
 
     private class ColorChooserListener implements MouseListener {
@@ -143,31 +151,44 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            Color chooseColor = JColorChooser.showDialog(mainPanel, "Choose a color", null);
+            String selectedItem = (String) cbColorScheme.getSelectedItem();
+            MarkColor tempColor = mMarkColors.get(selectedItem);
+            Color initialColor = null;
+            if (mFieldIndex == CURRENT) {
+                initialColor = new JBColor(tempColor.getCurrentColor(), tempColor.getCurrentColor());
+            } else if (mFieldIndex == CURRENT_TITLE) {
+                initialColor = new JBColor(tempColor.getCurrentTitleColor(), tempColor.getCurrentTitleColor());
+            } else if (mFieldIndex == INCOMING) {
+                initialColor = new JBColor(tempColor.getIncomingColor(), tempColor.getIncomingColor());
+            } else if (mFieldIndex == INCOMING_TITLE) {
+                initialColor = new JBColor(tempColor.getIncomingTitleColor(), tempColor.getIncomingTitleColor());
+            }
+
+            Color chooseColor = JColorChooser.showDialog(mainPanel, "Choose a color", initialColor);
             if (chooseColor != null) {
-                String selectedItem = (String) cbColorScheme.getSelectedItem();
                 String colorStr = Tools.color2HexString(chooseColor);
                 if (mFieldIndex == CURRENT) {
                     cCurrentColor.setBackground(chooseColor);
                     lbCurrentContent.setText(colorStr);
-                    mMarkColors.get(selectedItem).setCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
-                    mMarkColors.get(selectedItem).setDarkCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setDarkCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == CURRENT_TITLE) {
                     cCurrentTitleColor.setBackground(chooseColor);
                     lbCurrentTitle.setText(colorStr);
-                    mMarkColors.get(selectedItem).setCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
-                    mMarkColors.get(selectedItem).setDarkCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setDarkCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == INCOMING) {
                     cIncomingColor.setBackground(chooseColor);
                     lbIncomingContent.setText(colorStr);
-                    mMarkColors.get(selectedItem).setIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
-                    mMarkColors.get(selectedItem).setDarkIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setDarkIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == INCOMING_TITLE) {
                     cIncomingTitleColor.setBackground(chooseColor);
                     lbIncomingTitle.setText(colorStr);
-                    mMarkColors.get(selectedItem).setIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));
-                    mMarkColors.get(selectedItem).setDarkIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));
+                    tempColor.setDarkIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));
                 }
+                mMarkColors.put(selectedItem, tempColor);
             }
         }
 
@@ -212,7 +233,11 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
     @Override
     public boolean isModified() {
-        return cbColorScheme.getSelectedItem() != mSchemeName;
+        if (cbColorScheme.getSelectedItem() != mSchemeName) {
+            return true;
+        } else {
+            return !mOldMarkColor.equals(mMarkColors.get((String) cbColorScheme.getSelectedItem()));
+        }
     }
 
     @Override
@@ -224,8 +249,10 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         boolean isModified = isModified();
         GlobalSettings.getPersistentState().setMarkColors(mMarkColors);
         GlobalSettings.getPersistentState().setSchemeName((String) cbColorScheme.getSelectedItem());
-        //todo
         if (isModified) {
+            mSchemeName = (String) cbColorScheme.getSelectedItem();
+            mOldMarkColor.copy(mMarkColors.get(mSchemeName));
+            Global.sCurrentColor = mOldMarkColor;
             TextAttr.loadTextAttr();
             HighlightConflictAction.refreshHighlight();
         }
