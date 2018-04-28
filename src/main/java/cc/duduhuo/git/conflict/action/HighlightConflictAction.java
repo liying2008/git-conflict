@@ -1,13 +1,10 @@
 package cc.duduhuo.git.conflict.action;
 
-import cc.duduhuo.git.conflict.Constants;
-import cc.duduhuo.git.conflict.tool.BundleTools;
-import cc.duduhuo.git.conflict.tool.DocumentTools;
 import cc.duduhuo.git.conflict.Global;
 import cc.duduhuo.git.conflict.InDocumentListener;
-import com.intellij.notification.Notification;
+import cc.duduhuo.git.conflict.tool.DocumentTools;
+import cc.duduhuo.git.conflict.tool.NotificationTools;
 import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -37,8 +34,8 @@ public class HighlightConflictAction extends AnAction {
         final Document document = editor.getDocument();
         boolean hasConflict = DocumentTools.showConflict(editor);
         if (!hasConflict) {
-            Notification notification = new Notification(BundleTools.getValue(Constants.BundleKey.GROUP_DISPLAY_ID), "No Git Conflict", "There is no conflict in the document.", NotificationType.INFORMATION);
-            Notifications.Bus.notify(notification);
+            NotificationTools.showNotification("No Git Conflict", "There is no conflict in the document.",
+                NotificationType.INFORMATION);
             return;
         }
 

@@ -166,24 +166,25 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
 
             Color chooseColor = JColorChooser.showDialog(mainPanel, "Choose a color", initialColor);
             if (chooseColor != null) {
+                int rgb = chooseColor.getRGB();
                 String colorStr = Tools.color2HexString(chooseColor);
                 if (mFieldIndex == CURRENT) {
-                    cCurrentColor.setBackground(chooseColor);
+                    cCurrentColor.setBackground(new JBColor(rgb, rgb));
                     lbCurrentContent.setText(colorStr);
                     tempColor.setCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
                     tempColor.setDarkCurrentColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == CURRENT_TITLE) {
-                    cCurrentTitleColor.setBackground(chooseColor);
+                    cCurrentTitleColor.setBackground(new JBColor(rgb, rgb));
                     lbCurrentTitle.setText(colorStr);
                     tempColor.setCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
                     tempColor.setDarkCurrentTitleColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == INCOMING) {
-                    cIncomingColor.setBackground(chooseColor);
+                    cIncomingColor.setBackground(new JBColor(rgb, rgb));
                     lbIncomingContent.setText(colorStr);
                     tempColor.setIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
                     tempColor.setDarkIncomingColor(Integer.parseInt(colorStr.substring(2), 16));
                 } else if (mFieldIndex == INCOMING_TITLE) {
-                    cIncomingTitleColor.setBackground(chooseColor);
+                    cIncomingTitleColor.setBackground(new JBColor(rgb, rgb));
                     lbIncomingTitle.setText(colorStr);
                     tempColor.setIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));
                     tempColor.setDarkIncomingTitleColor(Integer.parseInt(colorStr.substring(2), 16));

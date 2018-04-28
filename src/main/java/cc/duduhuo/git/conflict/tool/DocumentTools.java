@@ -91,9 +91,7 @@ public final class DocumentTools {
                 }
             }
         }
-        if (hasConflict) {
-            sConflictItemMap.put(document, conflictItems);
-        }
+        sConflictItemMap.put(document, conflictItems);
         return hasConflict;
     }
 }
