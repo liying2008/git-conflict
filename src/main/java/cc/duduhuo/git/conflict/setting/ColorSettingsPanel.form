@@ -8,7 +8,7 @@
     <properties/>
     <border type="none" title=""/>
     <children>
-      <component id="a019b" class="javax.swing.JLabel">
+      <component id="ab8fc" class="com.intellij.ui.components.JBLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -37,7 +37,7 @@
         </properties>
         <border type="etched" title="Customize Scheme"/>
         <children>
-          <component id="a4f88" class="javax.swing.JLabel">
+          <component id="3f3d5" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="12" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -45,7 +45,7 @@
               <text value="Current Change:"/>
             </properties>
           </component>
-          <component id="263db" class="javax.swing.JLabel">
+          <component id="20fb6" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -53,7 +53,7 @@
               <text value="Title: "/>
             </properties>
           </component>
-          <component id="45b7e" class="javax.swing.JLabel">
+          <component id="c7cbc" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -61,7 +61,7 @@
               <text value="Incoming Change: "/>
             </properties>
           </component>
-          <component id="e4cf5" class="javax.swing.JLabel" binding="cCurrentColor">
+          <component id="db16d" class="com.intellij.ui.components.JBLabel" binding="cCurrentColor">
             <constraints>
               <grid row="1" column="9" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="120" height="-1"/>
@@ -73,7 +73,7 @@
               <text value=" "/>
             </properties>
           </component>
-          <component id="ccaf1" class="javax.swing.JLabel">
+          <component id="a9c6" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -81,7 +81,7 @@
               <text value="Title: "/>
             </properties>
           </component>
-          <component id="70e0f" class="javax.swing.JLabel" binding="cIncomingTitleColor">
+          <component id="a0d4" class="com.intellij.ui.components.JBLabel" binding="cIncomingTitleColor">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="120" height="-1"/>
@@ -93,7 +93,7 @@
               <text value=" "/>
             </properties>
           </component>
-          <component id="7407e" class="javax.swing.JLabel" binding="cIncomingColor">
+          <component id="6420d" class="com.intellij.ui.components.JBLabel" binding="cIncomingColor">
             <constraints>
               <grid row="4" column="9" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="120" height="-1"/>
@@ -105,7 +105,7 @@
               <text value=" "/>
             </properties>
           </component>
-          <component id="5f30e" class="javax.swing.JLabel" binding="lbCurrentTitle">
+          <component id="5bdbf" class="com.intellij.ui.components.JBLabel" binding="lbCurrentTitle">
             <constraints>
               <grid row="1" column="5" row-span="1" col-span="2" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -113,7 +113,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="f78bc" class="javax.swing.JLabel" binding="lbCurrentContent">
+          <component id="5b5cd" class="com.intellij.ui.components.JBLabel" binding="lbCurrentContent">
             <constraints>
               <grid row="1" column="12" row-span="1" col-span="1" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -121,7 +121,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="7f015" class="javax.swing.JLabel" binding="lbIncomingTitle">
+          <component id="cea63" class="com.intellij.ui.components.JBLabel" binding="lbIncomingTitle">
             <constraints>
               <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -129,7 +129,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="88e52" class="javax.swing.JLabel" binding="lbIncomingContent">
+          <component id="e78f3" class="com.intellij.ui.components.JBLabel" binding="lbIncomingContent">
             <constraints>
               <grid row="4" column="12" row-span="1" col-span="1" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -147,7 +147,7 @@
               <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
-          <component id="12dff" class="javax.swing.JLabel">
+          <component id="85f11" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -155,7 +155,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="d7eb5" class="javax.swing.JLabel" binding="cCurrentTitleColor">
+          <component id="59c96" class="com.intellij.ui.components.JBLabel" binding="cCurrentTitleColor">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="120" height="-1"/>
@@ -167,7 +167,7 @@
               <text value=" "/>
             </properties>
           </component>
-          <component id="1a152" class="javax.swing.JLabel">
+          <component id="2a854" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -175,7 +175,7 @@
               <text value="Content: "/>
             </properties>
           </component>
-          <component id="7991f" class="javax.swing.JLabel">
+          <component id="40bd9" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -190,7 +190,7 @@
           <grid row="4" column="0" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="332f" class="javax.swing.JLabel">
+      <component id="7d2f2" class="com.intellij.ui.components.JBLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

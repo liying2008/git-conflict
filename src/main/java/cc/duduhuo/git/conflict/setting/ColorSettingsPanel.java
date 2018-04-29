@@ -2,8 +2,7 @@ package cc.duduhuo.git.conflict.setting;
 
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.ui.ComboBox;
-import com.intellij.ui.components.JBPanel;
-import com.intellij.ui.components.JBTextField;
+import com.intellij.ui.components.JBLabel;
 
 import javax.swing.*;
 
@@ -20,13 +19,13 @@ public abstract class ColorSettingsPanel implements SearchableConfigurable {
     protected ComboBox<String> cbColorScheme;
     protected JButton btnNew;
     protected JPanel panelCustom;
-    protected JLabel cCurrentTitleColor;
-    protected JLabel cCurrentColor;
-    protected JLabel cIncomingTitleColor;
-    protected JLabel cIncomingColor;
-    protected JLabel lbCurrentTitle;
-    protected JLabel lbIncomingTitle;
-    protected JLabel lbCurrentContent;
-    protected JLabel lbIncomingContent;
+    protected JBLabel cCurrentTitleColor;
+    protected JBLabel cCurrentColor;
+    protected JBLabel cIncomingTitleColor;
+    protected JBLabel cIncomingColor;
+    protected JBLabel lbCurrentTitle;
+    protected JBLabel lbIncomingTitle;
+    protected JBLabel lbCurrentContent;
+    protected JBLabel lbIncomingContent;
     protected JButton btnDelete;
 }
