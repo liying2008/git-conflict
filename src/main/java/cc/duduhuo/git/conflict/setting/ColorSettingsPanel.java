@@ -2,6 +2,7 @@ package cc.duduhuo.git.conflict.setting;
 
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.components.JBPanel;
 import com.intellij.ui.components.JBTextField;
 
 import javax.swing.*;

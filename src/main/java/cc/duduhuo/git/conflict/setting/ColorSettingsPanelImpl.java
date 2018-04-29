@@ -42,23 +42,27 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         cIncomingColor.addMouseListener(new ColorChooserListener(ColorChooserListener.INCOMING));
         cIncomingTitleColor.addMouseListener(new ColorChooserListener(ColorChooserListener.INCOMING_TITLE));
 
+        // Call when the selected item is changed.
         cbColorScheme.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String selectedItem = (String) e.getItem();
                 updateUI(mMarkColors.get(selectedItem));
             }
         });
+        // New color scheme
         btnNew.addActionListener(e -> {
             String newSchemeName = JOptionPane.showInputDialog(mainPanel, "Please input new scheme name: ");
             if (newSchemeName == null) {
                 return;
             }
             if ("".equals(newSchemeName)) {
-                JOptionPane.showMessageDialog(mainPanel, "Scheme name can not be empty!", "Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(mainPanel, "Scheme name can not be empty!", "Failed",
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (mAllSchemeNames.contains(newSchemeName)) {
-                JOptionPane.showMessageDialog(mainPanel, "Scheme name already exists!", "Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(mainPanel, "Scheme name already exists!", "Failed",
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
             lbCurrentContent.setText("0x000000");
@@ -78,14 +82,22 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
             mMarkColors.put(newSchemeName, markColor);
             updateUI(markColor);
         });
+        // delete a color scheme
         btnDelete.addActionListener(e -> {
             String selectedItem = (String) cbColorScheme.getSelectedItem();
             int confirm = JOptionPane.showConfirmDialog(mainPanel, "Delete scheme: " + selectedItem + " ?", "Delete", JOptionPane.OK_CANCEL_OPTION);
             if (confirm == JOptionPane.OK_OPTION) {
-                mMarkColors.remove(selectedItem);
-                cbColorScheme.removeItem(selectedItem);
-                mAllSchemeNames.remove(selectedItem);
-                updateUI(mMarkColors.get((String) cbColorScheme.getSelectedItem()));
+                MarkColor markColor = mMarkColors.get((String) cbColorScheme.getSelectedItem());
+                // Double check. Prevent the built-in color scheme from being deleted.
+                if (!markColor.isBuiltIn()) {
+                    mMarkColors.remove(selectedItem);
+                    cbColorScheme.removeItem(selectedItem);
+                    mAllSchemeNames.remove(selectedItem);
+                    updateUI(markColor);
+                } else {
+                    JOptionPane.showMessageDialog(mainPanel, "The built-in color scheme cannot be deleted.",
+                        "Failed", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
