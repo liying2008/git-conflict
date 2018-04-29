@@ -1,6 +1,6 @@
 package cc.duduhuo.git.conflict;
 
-import cc.duduhuo.git.conflict.model.MarkColor;
+import cc.duduhuo.git.conflict.model.PersistentState;
 import cc.duduhuo.git.conflict.setting.SettingsService;
 import com.intellij.openapi.components.ServiceManager;
 
@@ -12,8 +12,8 @@ import com.intellij.openapi.components.ServiceManager;
  * Remarks:
  * =======================================================
  */
-public class GlobalSettings {
-    public static MarkColor getMarkColor() {
-        return ServiceManager.getService(SettingsService.class).markColor;
+public final class GlobalSettings {
+    public static PersistentState getPersistentState() {
+        return ServiceManager.getService(SettingsService.class).state;
     }
 }

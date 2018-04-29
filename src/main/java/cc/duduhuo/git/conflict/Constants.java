@@ -11,7 +11,7 @@ import com.intellij.openapi.editor.markup.HighlighterLayer;
  * =======================================================
  */
 public interface Constants {
-    String CURRENT_CHANGE = "<<<<<<< HEAD";
+    String CURRENT_CHANGE = "<<<<<<< ";
     String SEPARATOR = "=======";
     String INCOMING_CHANGE = ">>>>>>> ";
 

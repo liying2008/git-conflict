@@ -1,4 +1,4 @@
-package cc.duduhuo.git.conflict;
+package cc.duduhuo.git.conflict.tool;
 
 import com.intellij.CommonBundle;
 import org.jetbrains.annotations.NotNull;

@@ -1,8 +1,10 @@
 package cc.duduhuo.git.conflict.action;
 
-import cc.duduhuo.git.conflict.DocumentTools;
 import cc.duduhuo.git.conflict.Global;
 import cc.duduhuo.git.conflict.InDocumentListener;
+import cc.duduhuo.git.conflict.tool.DocumentTools;
+import cc.duduhuo.git.conflict.tool.NotificationTools;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -30,9 +32,14 @@ public class HighlightConflictAction extends AnAction {
         final Editor editor = e.getRequiredData(CommonDataKeys.EDITOR);
 
         final Document document = editor.getDocument();
-        sIsHighlightMap.put(editor, true);
-        DocumentTools.showConflict(editor);
+        boolean hasConflict = DocumentTools.showConflict(editor);
+        if (!hasConflict) {
+            NotificationTools.showNotification("No Git Conflict", "There is no conflict in the document.",
+                NotificationType.INFORMATION);
+            return;
+        }
 
+        sIsHighlightMap.put(editor, true);
         InDocumentListener oldListener = sDocumentListenerMap.get(document);
         if (oldListener == null) {
             InDocumentListener documentListener = new InDocumentListener(editor);
@@ -44,7 +51,9 @@ public class HighlightConflictAction extends AnAction {
     public static void refreshHighlight() {
         Set<Editor> keySet = Global.sIsHighlightMap.keySet();
         for (Editor editor : keySet) {
-            DocumentTools.showConflict(editor);
+            if (Global.sIsHighlightMap.get(editor)) {
+                DocumentTools.showConflict(editor);
+            }
         }
     }
 

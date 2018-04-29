@@ -1,8 +1,7 @@
 package cc.duduhuo.git.conflict.model;
 
-import cc.duduhuo.git.conflict.setting.SettingsService;
+import cc.duduhuo.git.conflict.BuiltInColor;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +12,10 @@ import java.util.Objects;
  * Remarks:
  * =======================================================
  */
-public final class MarkColor implements Serializable {
+public final class MarkColor {
+    private String mSchemeName;
+    private boolean mIsBuiltIn;
+
     private int mCurrentTitleColor;
     private int mCurrentColor;
     private int mIncomingTitleColor;
@@ -25,17 +27,21 @@ public final class MarkColor implements Serializable {
     private int mDarkIncomingColor;
 
     public MarkColor() {
-        this.mCurrentTitleColor = SettingsService.ColorSettings.AUTO.getCurrentTitleColor();
-        this.mCurrentColor = SettingsService.ColorSettings.AUTO.getCurrentColor();
-        this.mIncomingTitleColor = SettingsService.ColorSettings.AUTO.getIncomingTitleColor();
-        this.mIncomingColor = SettingsService.ColorSettings.AUTO.getIncomingColor();
-        this.mDarkCurrentTitleColor = SettingsService.ColorSettings.AUTO.getDarkCurrentTitleColor();
-        this.mDarkCurrentColor = SettingsService.ColorSettings.AUTO.getDarkCurrentColor();
-        this.mDarkIncomingTitleColor = SettingsService.ColorSettings.AUTO.getDarkIncomingTitleColor();
-        this.mDarkIncomingColor = SettingsService.ColorSettings.AUTO.getDarkIncomingColor();
+        this.mSchemeName = BuiltInColor.AUTO.getSchemeName();
+        this.mIsBuiltIn = BuiltInColor.AUTO.isBuiltIn();
+        this.mCurrentTitleColor = BuiltInColor.AUTO.getCurrentTitleColor();
+        this.mCurrentColor = BuiltInColor.AUTO.getCurrentColor();
+        this.mIncomingTitleColor = BuiltInColor.AUTO.getIncomingTitleColor();
+        this.mIncomingColor = BuiltInColor.AUTO.getIncomingColor();
+        this.mDarkCurrentTitleColor = BuiltInColor.AUTO.getDarkCurrentTitleColor();
+        this.mDarkCurrentColor = BuiltInColor.AUTO.getDarkCurrentColor();
+        this.mDarkIncomingTitleColor = BuiltInColor.AUTO.getDarkIncomingTitleColor();
+        this.mDarkIncomingColor = BuiltInColor.AUTO.getDarkIncomingColor();
     }
 
-    public MarkColor(int currentTitleColor, int currentColor, int incomingTitleColor, int incomingColor) {
+    public MarkColor(String schemeName, boolean isBuiltIn, int currentTitleColor, int currentColor, int incomingTitleColor, int incomingColor) {
+        mSchemeName = schemeName;
+        mIsBuiltIn = isBuiltIn;
         mCurrentTitleColor = currentTitleColor;
         mCurrentColor = currentColor;
         mIncomingTitleColor = incomingTitleColor;
@@ -46,8 +52,10 @@ public final class MarkColor implements Serializable {
         mDarkIncomingColor = incomingColor;
     }
 
-    public MarkColor(int currentTitleColor, int currentColor, int incomingTitleColor, int incomingColor,
-                     int darkCurrentTitleColor, int darkCurrentColor, int darkIncomingTitleColor, int darkIncomingColor) {
+    public MarkColor(String schemeName, boolean isBuiltIn, int currentTitleColor, int currentColor, int incomingTitleColor,
+                     int incomingColor, int darkCurrentTitleColor, int darkCurrentColor, int darkIncomingTitleColor, int darkIncomingColor) {
+        mSchemeName = schemeName;
+        mIsBuiltIn = isBuiltIn;
         mCurrentTitleColor = currentTitleColor;
         mCurrentColor = currentColor;
         mIncomingTitleColor = incomingTitleColor;
@@ -56,6 +64,22 @@ public final class MarkColor implements Serializable {
         mDarkCurrentColor = darkCurrentColor;
         mDarkIncomingTitleColor = darkIncomingTitleColor;
         mDarkIncomingColor = darkIncomingColor;
+    }
+
+    public String getSchemeName() {
+        return mSchemeName;
+    }
+
+    public void setSchemeName(String schemeName) {
+        mSchemeName = schemeName;
+    }
+
+    public boolean isBuiltIn() {
+        return mIsBuiltIn;
+    }
+
+    public void setBuiltIn(boolean builtIn) {
+        mIsBuiltIn = builtIn;
     }
 
     public int getCurrentTitleColor() {
@@ -123,6 +147,8 @@ public final class MarkColor implements Serializable {
     }
 
     public void setMarkColor(MarkColor markColor) {
+        this.mSchemeName = markColor.getSchemeName();
+        this.mIsBuiltIn = markColor.isBuiltIn();
         this.mCurrentColor = markColor.getCurrentColor();
         this.mCurrentTitleColor = markColor.getCurrentTitleColor();
         this.mIncomingColor = markColor.getIncomingColor();
@@ -133,24 +159,39 @@ public final class MarkColor implements Serializable {
         this.mDarkIncomingTitleColor = markColor.getDarkIncomingTitleColor();
     }
 
+    public MarkColor copy(MarkColor markColor) {
+        this.mSchemeName = markColor.getSchemeName();
+        this.mIsBuiltIn = markColor.isBuiltIn();
+        this.mCurrentColor = markColor.getCurrentColor();
+        this.mCurrentTitleColor = markColor.getCurrentTitleColor();
+        this.mIncomingColor = markColor.getIncomingColor();
+        this.mIncomingTitleColor = markColor.getIncomingTitleColor();
+        this.mDarkCurrentColor = markColor.getDarkCurrentColor();
+        this.mDarkCurrentTitleColor = markColor.getDarkCurrentTitleColor();
+        this.mDarkIncomingColor = markColor.getDarkIncomingColor();
+        this.mDarkIncomingTitleColor = markColor.getDarkIncomingTitleColor();
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof MarkColor)) return false;
         MarkColor markColor = (MarkColor) o;
-        return mCurrentTitleColor == markColor.mCurrentTitleColor &&
+        return mIsBuiltIn == markColor.mIsBuiltIn &&
+            mCurrentTitleColor == markColor.mCurrentTitleColor &&
             mCurrentColor == markColor.mCurrentColor &&
             mIncomingTitleColor == markColor.mIncomingTitleColor &&
             mIncomingColor == markColor.mIncomingColor &&
             mDarkCurrentTitleColor == markColor.mDarkCurrentTitleColor &&
             mDarkCurrentColor == markColor.mDarkCurrentColor &&
             mDarkIncomingTitleColor == markColor.mDarkIncomingTitleColor &&
-            mDarkIncomingColor == markColor.mDarkIncomingColor;
+            mDarkIncomingColor == markColor.mDarkIncomingColor &&
+            Objects.equals(mSchemeName, markColor.mSchemeName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mCurrentTitleColor, mCurrentColor, mIncomingTitleColor, mIncomingColor,
-            mDarkCurrentTitleColor, mDarkCurrentColor, mDarkIncomingTitleColor, mDarkIncomingColor);
+        return Objects.hash(mSchemeName, mIsBuiltIn, mCurrentTitleColor, mCurrentColor, mIncomingTitleColor, mIncomingColor, mDarkCurrentTitleColor, mDarkCurrentColor, mDarkIncomingTitleColor, mDarkIncomingColor);
     }
 }

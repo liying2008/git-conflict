@@ -24,5 +24,6 @@ public final class Global {
     public static Map<Document, List<ConflictItem>> sConflictItemMap = new HashMap<>();
     public static Map<Document, InDocumentListener> sDocumentListenerMap = new HashMap<>();
     // current color scheme
-    public static MarkColor sCurrentColor = GlobalSettings.getMarkColor();
+    public static MarkColor sCurrentColor = GlobalSettings.getPersistentState().getMarkColors()
+        .get(GlobalSettings.getPersistentState().getSchemeName());
 }

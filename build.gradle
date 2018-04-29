@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'cc.duduhuo'
-version = '0.0.1'
+version = '1.0.0'
 def name = 'git-conflict'
 
 apply plugin: 'idea'

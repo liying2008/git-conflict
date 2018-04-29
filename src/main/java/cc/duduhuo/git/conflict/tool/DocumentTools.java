@@ -1,5 +1,7 @@
-package cc.duduhuo.git.conflict;
+package cc.duduhuo.git.conflict.tool;
 
+import cc.duduhuo.git.conflict.Constants;
+import cc.duduhuo.git.conflict.TextAttr;
 import cc.duduhuo.git.conflict.model.ConflictItem;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -20,7 +22,14 @@ import static cc.duduhuo.git.conflict.Global.sConflictItemMap;
  * =======================================================
  */
 public final class DocumentTools {
-    public static void showConflict(final Editor editor) {
+    /**
+     * Displays conflicts in document.
+     *
+     * @param editor
+     * @return false: no conflicts; true: there is(are) conflict(s)
+     */
+    public static boolean showConflict(final Editor editor) {
+        boolean hasConflict = false;
         final Document document = editor.getDocument();
         final MarkupModel markupModel = editor.getMarkupModel();
         String text = document.getText();
@@ -48,6 +57,7 @@ public final class DocumentTools {
                 }
             } else if (textArr[i].startsWith(Constants.INCOMING_CHANGE)) {
                 if (separatorLineNum > -1) {
+                    hasConflict = true;
                     incomingLineNum = i;
                     // get conflict content
                     int currentStartOffset = document.getLineStartOffset(currentChangeLineNum + 1);
@@ -82,5 +92,6 @@ public final class DocumentTools {
             }
         }
         sConflictItemMap.put(document, conflictItems);
+        return hasConflict;
     }
 }
