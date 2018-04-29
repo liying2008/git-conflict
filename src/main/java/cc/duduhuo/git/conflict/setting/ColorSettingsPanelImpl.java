@@ -21,7 +21,7 @@ import java.util.List;
  * =======================================================
  * Author: liying - liruoer2008@yeah.net
  * Datetime: 2018/4/22 16:50
- * Description:
+ * Description: Settings panel's implementation
  * Remarks:
  * =======================================================
  */

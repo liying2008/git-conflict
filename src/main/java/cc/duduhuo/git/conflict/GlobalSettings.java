@@ -12,7 +12,7 @@ import com.intellij.openapi.components.ServiceManager;
  * Remarks:
  * =======================================================
  */
-public class GlobalSettings {
+public final class GlobalSettings {
     public static PersistentState getPersistentState() {
         return ServiceManager.getService(SettingsService.class).state;
     }

@@ -31,7 +31,7 @@
 
 ![fix-git-conflict](example/fix-git-conflict.gif)
 
-**设置面板：** 通过 `Settings -> Tools -> Git Conflict` 进入设置面板，可以根据 IDE 的颜色方案选择冲突高亮的颜色方案：
+**设置面板：** 通过 `Settings -> Tools -> Git Conflict` 进入设置面板，选择自己喜欢的颜色方案：
 
 ![settings-panel](example/settings-panel.png)
 

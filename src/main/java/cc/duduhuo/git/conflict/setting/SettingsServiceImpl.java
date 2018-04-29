@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
  * =======================================================
  * Author: liying - liruoer2008@yeah.net
  * Datetime: 2018/4/22 18:12
- * Description:
+ * Description: Settings service implementation
  * Remarks:
  * =======================================================
  */
