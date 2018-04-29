@@ -2,7 +2,6 @@ package cc.duduhuo.git.conflict.model;
 
 import cc.duduhuo.git.conflict.BuiltInColor;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Objects;
  * Remarks:
  * =======================================================
  */
-public final class MarkColor implements Serializable {
+public final class MarkColor {
     private String mSchemeName;
     private boolean mIsBuiltIn;
 

@@ -17,7 +17,7 @@ public final class PersistentState {
     private LinkedHashMap<String, MarkColor> mMarkColors;
 
     public PersistentState() {
-        mSchemeName = BuiltInColor.DEFAULT_SCHEME;
+        mSchemeName = BuiltInColor.DEFAULT_SCHEME_NAME;
         mMarkColors = new LinkedHashMap<>();
         mMarkColors.put(BuiltInColor.AUTO_SCHEME_NAME, BuiltInColor.AUTO);
         mMarkColors.put(BuiltInColor.INTELLIJ_SCHEME_NAME, BuiltInColor.INTELLIJ);

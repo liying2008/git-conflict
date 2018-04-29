@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="511" height="400"/>
+      <xy x="20" y="20" width="549" height="400"/>
     </constraints>
     <properties/>
     <border type="none" title=""/>
@@ -39,7 +39,7 @@
         <children>
           <component id="3f3d5" class="com.intellij.ui.components.JBLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="12" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="13" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Current Change:"/>
@@ -55,7 +55,7 @@
           </component>
           <component id="c7cbc" class="com.intellij.ui.components.JBLabel">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="13" vsize-policy="0" hsize-policy="7" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Incoming Change: "/>
@@ -63,8 +63,8 @@
           </component>
           <component id="db16d" class="com.intellij.ui.components.JBLabel" binding="cCurrentColor">
             <constraints>
-              <grid row="1" column="9" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="120" height="-1"/>
+              <grid row="1" column="8" row-span="1" col-span="4" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
               </grid>
             </constraints>
             <properties>
@@ -83,8 +83,8 @@
           </component>
           <component id="a0d4" class="com.intellij.ui.components.JBLabel" binding="cIncomingTitleColor">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="120" height="-1"/>
+              <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
               </grid>
             </constraints>
             <properties>
@@ -95,8 +95,8 @@
           </component>
           <component id="6420d" class="com.intellij.ui.components.JBLabel" binding="cIncomingColor">
             <constraints>
-              <grid row="4" column="9" row-span="1" col-span="3" vsize-policy="0" hsize-policy="1" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="120" height="-1"/>
+              <grid row="4" column="8" row-span="1" col-span="4" vsize-policy="0" hsize-policy="7" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
               </grid>
             </constraints>
             <properties>
@@ -107,7 +107,7 @@
           </component>
           <component id="5bdbf" class="com.intellij.ui.components.JBLabel" binding="lbCurrentTitle">
             <constraints>
-              <grid row="1" column="5" row-span="1" col-span="2" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="5" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="0"/>
@@ -137,28 +137,18 @@
               <text value="0"/>
             </properties>
           </component>
-          <hspacer id="3186d">
-            <constraints>
-              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </hspacer>
-          <hspacer id="6c131">
-            <constraints>
-              <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </hspacer>
           <component id="85f11" class="com.intellij.ui.components.JBLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value=""/>
+              <text value=" "/>
             </properties>
           </component>
           <component id="59c96" class="com.intellij.ui.components.JBLabel" binding="cCurrentTitleColor">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="120" height="-1"/>
+              <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="60" height="-1"/>
               </grid>
             </constraints>
             <properties>
@@ -169,7 +159,7 @@
           </component>
           <component id="2a854" class="com.intellij.ui.components.JBLabel">
             <constraints>
-              <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Content: "/>
@@ -177,7 +167,7 @@
           </component>
           <component id="40bd9" class="com.intellij.ui.components.JBLabel">
             <constraints>
-              <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Content: "/>
@@ -192,7 +182,7 @@
       </vspacer>
       <component id="7d2f2" class="com.intellij.ui.components.JBLabel">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="  "/>

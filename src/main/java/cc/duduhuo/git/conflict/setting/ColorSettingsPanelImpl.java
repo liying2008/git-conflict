@@ -87,13 +87,12 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
             String selectedItem = (String) cbColorScheme.getSelectedItem();
             int confirm = JOptionPane.showConfirmDialog(mainPanel, "Delete scheme: " + selectedItem + " ?", "Delete", JOptionPane.OK_CANCEL_OPTION);
             if (confirm == JOptionPane.OK_OPTION) {
-                MarkColor markColor = mMarkColors.get((String) cbColorScheme.getSelectedItem());
+                MarkColor markColor = mMarkColors.get(selectedItem);
                 // Double check. Prevent the built-in color scheme from being deleted.
                 if (!markColor.isBuiltIn()) {
                     mMarkColors.remove(selectedItem);
                     cbColorScheme.removeItem(selectedItem);
                     mAllSchemeNames.remove(selectedItem);
-                    updateUI(markColor);
                 } else {
                     JOptionPane.showMessageDialog(mainPanel, "The built-in color scheme cannot be deleted.",
                         "Failed", JOptionPane.ERROR_MESSAGE);
@@ -102,27 +101,35 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void initUI() {
         PersistentState persistentState = GlobalSettings.getPersistentState();
-        mMarkColors = persistentState.getMarkColors();
+        LinkedHashMap<String, MarkColor> map = persistentState.getMarkColors();
         mSchemeName = persistentState.getSchemeName();
-        String name;
+        // clone markColors map
+        mMarkColors = (LinkedHashMap<String, MarkColor>) map.clone();
+
         // make sure the built-in color is displayed at the top.
         cbColorScheme.addItem(BuiltInColor.AUTO_SCHEME_NAME);
         cbColorScheme.addItem(BuiltInColor.INTELLIJ_SCHEME_NAME);
         cbColorScheme.addItem(BuiltInColor.DARCULA_SCHEME_NAME);
-        Set<String> keySet = mMarkColors.keySet();
+        Set<String> keySet = map.keySet();
         for (String key : keySet) {
-            name = mMarkColors.get(key).getSchemeName();
-            if (!name.equals(BuiltInColor.AUTO_SCHEME_NAME) &&
-                !name.equals(BuiltInColor.INTELLIJ_SCHEME_NAME) &&
-                !name.equals(BuiltInColor.DARCULA_SCHEME_NAME)) {
-                cbColorScheme.addItem(name);
+            if (!key.equals(BuiltInColor.AUTO_SCHEME_NAME) &&
+                !key.equals(BuiltInColor.INTELLIJ_SCHEME_NAME) &&
+                !key.equals(BuiltInColor.DARCULA_SCHEME_NAME)) {
+                cbColorScheme.addItem(key);
             }
-            mAllSchemeNames.add(name);
+            mAllSchemeNames.add(key);
         }
-        cbColorScheme.setSelectedItem(mSchemeName);
-        mOldMarkColor.copy(mMarkColors.get(mSchemeName));
+        // Double check.
+        if (keySet.contains(mSchemeName)) {
+            cbColorScheme.setSelectedItem(mSchemeName);
+            mOldMarkColor.copy(map.get(mSchemeName));
+        } else {
+            cbColorScheme.setSelectedItem(BuiltInColor.DEFAULT_SCHEME_NAME);
+            mOldMarkColor.copy(BuiltInColor.DEFAULT_MARK_COLOR);
+        }
         updateUI(mOldMarkColor);
     }
 
@@ -258,9 +265,10 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void apply() {
         boolean isModified = isModified();
-        GlobalSettings.getPersistentState().setMarkColors(mMarkColors);
+        GlobalSettings.getPersistentState().setMarkColors((LinkedHashMap<String, MarkColor>) mMarkColors.clone());
         GlobalSettings.getPersistentState().setSchemeName((String) cbColorScheme.getSelectedItem());
         if (isModified) {
             mSchemeName = (String) cbColorScheme.getSelectedItem();
