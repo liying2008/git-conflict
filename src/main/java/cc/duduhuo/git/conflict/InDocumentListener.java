@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
+import org.jetbrains.annotations.NotNull;
 
 import static cc.duduhuo.git.conflict.Global.sConflictItemMap;
 import static cc.duduhuo.git.conflict.Global.sIsHighlightMap;
@@ -18,14 +19,14 @@ import static cc.duduhuo.git.conflict.Global.sIsHighlightMap;
  * =======================================================
  */
 public final class InDocumentListener implements DocumentListener {
-    private Editor mEditor;
+    private final Editor mEditor;
 
     public InDocumentListener(Editor editor) {
         this.mEditor = editor;
     }
 
     @Override
-    public void documentChanged(DocumentEvent event) {
+    public void documentChanged(@NotNull DocumentEvent event) {
         boolean hasConflict = DocumentTools.showConflict(mEditor);
         if (!hasConflict) {
             Document document = mEditor.getDocument();

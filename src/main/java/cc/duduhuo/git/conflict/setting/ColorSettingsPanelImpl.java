@@ -26,10 +26,10 @@ import java.util.List;
  * =======================================================
  */
 public class ColorSettingsPanelImpl extends ColorSettingsPanel {
-    private MarkColor mOldMarkColor = new MarkColor();
+    private final MarkColor mOldMarkColor = new MarkColor();
     private LinkedHashMap<String, MarkColor> mMarkColors;
     private String mSchemeName;
-    private List<String> mAllSchemeNames = new ArrayList<>();
+    private final List<String> mAllSchemeNames = new ArrayList<>();
 
     public ColorSettingsPanelImpl() {
         initUI();
@@ -161,7 +161,7 @@ public class ColorSettingsPanelImpl extends ColorSettingsPanel {
         static final int CURRENT_TITLE = 1;
         static final int INCOMING = 2;
         static final int INCOMING_TITLE = 3;
-        private int mFieldIndex;
+        private final int mFieldIndex;
 
 
         public ColorChooserListener(int index) {
