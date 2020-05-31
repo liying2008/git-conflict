@@ -10,9 +10,9 @@
 
 ## How to Install
 
-- 在 [GitHub Releases](https://github.com/liying2008/git-conflict/releases) 页面下载最新的 `jar` 包，然后通过 `Settings -> Plugins -> Install plugin from disk..` 选择下载的 `jar` 包安装；
+- 在 [GitHub Releases](https://github.com/liying2008/git-conflict/releases) 页面下载最新的 `zip` 包，然后通过 `Settings -> Plugins -> Install plugin from disk..` 选择下载的 `zip` 包安装；
 
-- 或者在 `Settings -> Plugins -> Browse repositories..` 界面搜索 `Git Conflict` 。
+- 或者在 `Settings -> Plugins -> Marketplace` 里面搜索 `Git Conflict` 。
 
 ## How to Use
 
