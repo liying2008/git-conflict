@@ -33,7 +33,7 @@ class HighlightConflictAction : AnAction() {
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
         val hasConflict = showConflict(editor)
         if (!hasConflict) {

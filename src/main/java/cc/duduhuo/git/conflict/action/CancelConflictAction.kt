@@ -18,7 +18,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 class CancelConflictAction : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
-        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
         sIsHighlightMap[editor] = false
         sConflictItemMap.remove(document)
