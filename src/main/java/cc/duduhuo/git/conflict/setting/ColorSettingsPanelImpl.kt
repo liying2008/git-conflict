@@ -254,7 +254,10 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
         }
     }
 
-    override fun reset() {}
+    override fun reset() {
+        cbColorScheme.selectedItem = mSchemeName
+    }
+
     override fun apply() {
         val isModified = isModified
         val persistentState = GlobalSettings.getPersistentState()
