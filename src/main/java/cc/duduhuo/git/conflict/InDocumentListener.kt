@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.Global.sConflictItemMap
+import cc.duduhuo.git.conflict.Global.sDocumentListenerMap
 import cc.duduhuo.git.conflict.Global.sIsHighlightMap
 import cc.duduhuo.git.conflict.tool.DocumentTools.showConflict
 import com.intellij.openapi.editor.Editor
@@ -23,10 +24,10 @@ class InDocumentListener(private val mEditor: Editor) : DocumentListener {
             val document = mEditor.document
             sIsHighlightMap[mEditor] = false
             sConflictItemMap.remove(document)
-            val listener = Global.sDocumentListenerMap[document]
+            val listener = sDocumentListenerMap[document]
             if (listener != null) {
                 document.removeDocumentListener(listener)
-                Global.sDocumentListenerMap.remove(document)
+                sDocumentListenerMap.remove(document)
             }
         }
     }

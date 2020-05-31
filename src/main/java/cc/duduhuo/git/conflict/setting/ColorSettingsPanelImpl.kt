@@ -44,30 +44,30 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
 
     private fun initUI() {
         val persistentState = GlobalSettings.getPersistentState()
-        val map = persistentState.markColors
+        val markColors = persistentState.markColors
         mSchemeName = persistentState.schemeName
         // clone markColors map
         @SuppressWarnings("unchecked")
-        mMarkColors = map.clone() as LinkedHashMap<String, MarkColor>
+        mMarkColors = markColors.clone() as LinkedHashMap<String, MarkColor>
 
         // make sure the built-in color is displayed at the top.
         cbColorScheme.addItem(BuiltInColor.AUTO_SCHEME_NAME)
         cbColorScheme.addItem(BuiltInColor.INTELLIJ_SCHEME_NAME)
         cbColorScheme.addItem(BuiltInColor.DARCULA_SCHEME_NAME)
-        val keySet: Set<String> = map.keys
-        for (key in keySet) {
-            if (key != BuiltInColor.AUTO_SCHEME_NAME &&
-                key != BuiltInColor.INTELLIJ_SCHEME_NAME &&
-                key != BuiltInColor.DARCULA_SCHEME_NAME
+
+        markColors.forEach { (schemeName, markColor) ->
+            if (schemeName != BuiltInColor.AUTO_SCHEME_NAME &&
+                schemeName != BuiltInColor.INTELLIJ_SCHEME_NAME &&
+                schemeName != BuiltInColor.DARCULA_SCHEME_NAME
             ) {
-                cbColorScheme.addItem(key)
+                cbColorScheme.addItem(schemeName)
             }
-            mAllSchemeNames.add(key)
+            mAllSchemeNames.add(schemeName)
         }
         // Double check.
-        if (keySet.contains(mSchemeName)) {
+        if (mSchemeName in markColors) {
             cbColorScheme.selectedItem = mSchemeName
-            mOldMarkColor.copy(map[mSchemeName]!!)
+            mOldMarkColor.copy(markColors[mSchemeName]!!)
         } else {
             cbColorScheme.selectedItem = BuiltInColor.DEFAULT_SCHEME_NAME
             mOldMarkColor.copy(BuiltInColor.DEFAULT_MARK_COLOR)
@@ -158,9 +158,9 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
                 JOptionPane.OK_CANCEL_OPTION
             )
             if (confirm == JOptionPane.OK_OPTION) {
-                val markColor = mMarkColors[selectedItem]
+                val markColor = mMarkColors[selectedItem]!!
                 // Double check. Prevent the built-in color scheme from being deleted.
-                if (!markColor!!.isBuiltIn) {
+                if (!markColor.isBuiltIn) {
                     mMarkColors.remove(selectedItem)
                     cbColorScheme.removeItem(selectedItem)
                     mAllSchemeNames.remove(selectedItem)

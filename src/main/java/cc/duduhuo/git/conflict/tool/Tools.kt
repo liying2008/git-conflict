@@ -28,12 +28,12 @@ object Tools {
     }
 
     fun int2HexString(color: Int): String {
-        val s = StringBuilder(Integer.toHexString(color))
-        val count = 6 - s.length
+        val sb = StringBuilder(Integer.toHexString(color))
+        val count = 6 - sb.length
         for (i in 0 until count) {
-            s.insert(0, "0")
+            sb.insert(0, "0")
         }
-        s.insert(0, "0x")
-        return s.toString()
+        sb.insert(0, "0x")
+        return sb.toString()
     }
 }

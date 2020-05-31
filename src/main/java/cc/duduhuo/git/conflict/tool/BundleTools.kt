@@ -1,6 +1,6 @@
 package cc.duduhuo.git.conflict.tool
 
-import com.intellij.CommonBundle
+import com.intellij.AbstractBundle
 import java.util.*
 
 /**
@@ -16,6 +16,6 @@ object BundleTools {
     private var sBundle: ResourceBundle = ResourceBundle.getBundle(BUNDLE_FILE)
 
     fun getValue(key: String): String {
-        return CommonBundle.message(sBundle, key, "%s")
+        return AbstractBundle.message(sBundle, key, "%s")
     }
 }

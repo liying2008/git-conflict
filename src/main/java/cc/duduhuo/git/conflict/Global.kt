@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.model.ConflictItem
+import cc.duduhuo.git.conflict.model.MarkColor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 
@@ -14,13 +15,18 @@ import com.intellij.openapi.editor.Editor
  */
 object Global {
     // is it highlighted
-    var sIsHighlightMap: MutableMap<Editor, Boolean> = mutableMapOf()
+    val sIsHighlightMap: MutableMap<Editor, Boolean> = mutableMapOf()
 
     // conflict item list
-    var sConflictItemMap: MutableMap<Document, MutableList<ConflictItem>> = mutableMapOf()
+    val sConflictItemMap: MutableMap<Document, MutableList<ConflictItem>> = mutableMapOf()
 
-    var sDocumentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
+    // document listener map
+    val sDocumentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
 
     // current color scheme
-    var sCurrentColor = GlobalSettings.getPersistentState().markColors[GlobalSettings.getPersistentState().schemeName]
+    var sCurrentColor: MarkColor = MarkColor()
+        get() {
+            val state = GlobalSettings.getPersistentState()
+            return state.markColors[state.schemeName]!!
+        }
 }

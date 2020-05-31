@@ -28,29 +28,28 @@ object DocumentTools {
         val markupModel = editor.markupModel
         val text = document.text
         val textArr = text.split("\n")
-        val lineCount = textArr.size
         markupModel.removeAllHighlighters()
         sConflictItemMap.remove(document)
         var currentChangeLineNum = -1
         var separatorLineNum = -1
         var incomingLineNum = -1
         val conflictItems: MutableList<ConflictItem> = mutableListOf()
-        for (i in 0 until lineCount) {
-            if (textArr[i].startsWith(Constants.CURRENT_CHANGE)) {
-                currentChangeLineNum = i
+        textArr.forEachIndexed { index, line ->
+            if (line.startsWith(Constants.CURRENT_CHANGE)) {
+                currentChangeLineNum = index
                 separatorLineNum = -1
                 incomingLineNum = -1
-            } else if (textArr[i].startsWith(Constants.SEPARATOR)) {
+            } else if (line.startsWith(Constants.SEPARATOR)) {
                 if (currentChangeLineNum > -1 && separatorLineNum == -1) {
-                    separatorLineNum = i
+                    separatorLineNum = index
                 } else {
                     currentChangeLineNum = -1
                     separatorLineNum = -1
                 }
-            } else if (textArr[i].startsWith(Constants.INCOMING_CHANGE)) {
+            } else if (line.startsWith(Constants.INCOMING_CHANGE)) {
                 if (separatorLineNum > -1) {
                     hasConflict = true
-                    incomingLineNum = i
+                    incomingLineNum = index
                     // get conflict content
                     val currentStartOffset = document.getLineStartOffset(currentChangeLineNum + 1)
                     val currentEndOffset = document.getLineEndOffset(separatorLineNum - 1)

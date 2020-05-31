@@ -9,7 +9,6 @@ import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.editor.Editor
 
 /**
  * =======================================================
@@ -23,9 +22,8 @@ class HighlightConflictAction : AnAction() {
 
     companion object {
         fun refreshHighlight() {
-            val keySet: Set<Editor> = sIsHighlightMap.keys
-            for (editor in keySet) {
-                if (sIsHighlightMap[editor]!!) {
+            sIsHighlightMap.forEach { (editor, isHighlight) ->
+                if (isHighlight) {
                     showConflict(editor)
                 }
             }
