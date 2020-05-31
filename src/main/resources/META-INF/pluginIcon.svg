@@ -1,0 +1,26 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="svg_5_blur">
+            <feGaussianBlur stdDeviation="0" in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g>
+        <title>background</title>
+        <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+            <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+        </g>
+    </g>
+    <g>
+        <title>Layer 1</title>
+        <rect rx="66" id="svg_7" height="482" width="482" y="16" x="15" stroke-width="1.5" fill="#535f75"/>
+        <text filter="url(#svg_5_blur)" font-style="normal" font-weight="bold" xml:space="preserve" text-anchor="start"
+              font-family="Helvetica, Arial, sans-serif" font-size="104" id="svg_3" y="155" x="43.429688"
+              stroke-width="2" stroke="#fff" fill="#2f7366">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</text>
+        <text filter="url(#svg_5_blur)" font-style="normal" font-weight="bold" xml:space="preserve" text-anchor="start"
+              font-family="Helvetica, Arial, sans-serif" font-size="104" id="svg_4" y="294.453125" x="43.429688"
+              stroke-width="2" stroke="#fff" fill="#56aaff">=======</text>
+        <text font-style="normal" font-weight="bold" xml:space="preserve" text-anchor="start"
+              font-family="Helvetica, Arial, sans-serif" font-size="104" id="svg_5" y="433" x="43.429688"
+              stroke-width="2" stroke="#fff" fill="#2f628f">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</text>
+    </g>
+</svg>

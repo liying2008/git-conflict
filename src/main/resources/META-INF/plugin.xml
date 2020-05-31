@@ -14,8 +14,7 @@
                                  id="cc.duduhuo.git.conflict.setting.applicationConfigurable"
                                  instance="cc.duduhuo.git.conflict.setting.ColorSettingsPanelImpl"/>
         <applicationService
-                serviceInterface="cc.duduhuo.git.conflict.setting.SettingsService"
-                serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsServiceImpl"/>
+                serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsService"/>
     </extensions>
     <actions>
         <action id="GitConflict.Highlight" class="cc.duduhuo.git.conflict.action.HighlightConflictAction"
