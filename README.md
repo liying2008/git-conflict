@@ -1,12 +1,12 @@
 # git-conflict
 
 
-![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/10656-git-conflict.svg)
-![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/10656-git-conflict.svg)
+[![JetBrains Plugins](https://img.shields.io/jetbrains/plugin/v/10656-git-conflict.svg)](https://plugins.jetbrains.com/plugin/10656-git-conflict)
+[![JetBrains plugins](https://img.shields.io/jetbrains/plugin/d/10656-git-conflict.svg)](https://plugins.jetbrains.com/plugin/10656-git-conflict)
 [![GitHub release](https://img.shields.io/github/release/liying2008/git-conflict.svg)](https://github.com/liying2008/git-conflict/releases)
 [![license](https://img.shields.io/github/license/liying2008/git-conflict.svg)](https://github.com/liying2008/git-conflict/blob/master/LICENSE)
 
-一款 JetBrains IDEA / Android Studio 等 IDE 的 `Git` 冲突 **高亮显示** 的插件。
+一款 JetBrains IDEA / Android Studio 等 Jetbrains IDE 的 `Git` 冲突 **高亮显示** 的插件。
 
 ## How to Install
 
