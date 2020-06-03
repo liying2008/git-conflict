@@ -17,8 +17,8 @@ object Constants {
 
     const val HIGHLIGHTER_LAYER = HighlighterLayer.SELECTION - 1
 
-    object BundleKey {
-        const val GROUP_DISPLAY_ID = "notification.group.display.id"
-        const val SETTINGS_TITLE = "settings.title"
+    object Resource {
+        const val NOTIFICATION_GROUP_DISPLAY_ID = "Git Conflict"
+        const val SETTINGS_TITLE = "Git Conflict"
     }
 }

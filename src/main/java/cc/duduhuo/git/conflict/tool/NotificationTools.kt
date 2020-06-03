@@ -16,7 +16,7 @@ import com.intellij.notification.Notifications
 object NotificationTools {
     fun showNotification(title: String, content: String, type: NotificationType) {
         val notification = Notification(
-            BundleTools.getValue(Constants.BundleKey.GROUP_DISPLAY_ID), title, content, type
+            Constants.Resource.NOTIFICATION_GROUP_DISPLAY_ID, title, content, type
         )
         Notifications.Bus.notify(notification)
     }

@@ -3,7 +3,6 @@ package cc.duduhuo.git.conflict.setting
 import cc.duduhuo.git.conflict.*
 import cc.duduhuo.git.conflict.action.HighlightConflictAction.Companion.refreshHighlight
 import cc.duduhuo.git.conflict.model.MarkColor
-import cc.duduhuo.git.conflict.tool.BundleTools.getValue
 import cc.duduhuo.git.conflict.tool.Tools.color2HexString
 import cc.duduhuo.git.conflict.tool.Tools.int2HexString
 import com.intellij.ui.JBColor
@@ -235,7 +234,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
     }
 
     override fun getId(): String {
-        return getValue(Constants.BundleKey.SETTINGS_TITLE)
+        return Constants.Resource.SETTINGS_TITLE
     }
 
     override fun getDisplayName(): @Nls String? {
