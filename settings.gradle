@@ -1,2 +1,8 @@
-rootProject.name = 'git-conflict'
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
+rootProject.name = 'git-conflict'

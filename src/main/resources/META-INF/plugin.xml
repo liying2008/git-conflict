@@ -2,8 +2,6 @@
     <id>cc.duduhuo.git-conflict</id>
     <name>Git Conflict</name>
     <vendor email="liruoer2008@yeah.net" url="https://github.com/liying2008/git-conflict">liying</vendor>
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="171.3019.7"/>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -12,6 +10,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable groupId="tools"
                                  id="cc.duduhuo.git.conflict.setting.applicationConfigurable"
+                                 displayName="Git Conflict"
                                  instance="cc.duduhuo.git.conflict.setting.ColorSettingsPanelImpl"/>
         <applicationService
                 serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsService"/>

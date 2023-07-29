@@ -6,3 +6,4 @@
 local.properties
 build/
 out/
+.run/Publish Plugin.run.xml
