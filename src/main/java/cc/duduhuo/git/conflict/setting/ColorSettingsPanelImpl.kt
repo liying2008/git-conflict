@@ -1,12 +1,15 @@
 package cc.duduhuo.git.conflict.setting
 
-import cc.duduhuo.git.conflict.*
+import cc.duduhuo.git.conflict.BuiltInColor
+import cc.duduhuo.git.conflict.Constants
+import cc.duduhuo.git.conflict.Global
+import cc.duduhuo.git.conflict.GlobalSettings
+import cc.duduhuo.git.conflict.TextAttr
 import cc.duduhuo.git.conflict.action.HighlightConflictAction.Companion.refreshHighlight
 import cc.duduhuo.git.conflict.model.MarkColor
 import cc.duduhuo.git.conflict.tool.Tools.color2HexString
 import cc.duduhuo.git.conflict.tool.Tools.int2HexString
 import com.intellij.ui.JBColor
-import org.jetbrains.annotations.Nls
 import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
@@ -46,7 +49,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
         val markColors = persistentState.markColors
         mSchemeName = persistentState.schemeName
         // clone markColors map
-        @SuppressWarnings("unchecked")
+        @Suppress("UNCHECKED_CAST")
         mMarkColors = markColors.clone() as LinkedHashMap<String, MarkColor>
 
         // make sure the built-in color is displayed at the top.
@@ -182,15 +185,19 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
                 CURRENT -> {
                     JBColor(tempColor.currentColor, tempColor.currentColor)
                 }
+
                 CURRENT_TITLE -> {
                     JBColor(tempColor.currentTitleColor, tempColor.currentTitleColor)
                 }
+
                 INCOMING -> {
                     JBColor(tempColor.incomingColor, tempColor.incomingColor)
                 }
+
                 INCOMING_TITLE -> {
                     JBColor(tempColor.incomingTitleColor, tempColor.incomingTitleColor)
                 }
+
                 else -> null
             }
             val chooseColor = JColorChooser.showDialog(mainPanel, "Choose a color", initialColor)
@@ -204,18 +211,21 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
                         tempColor.currentColor = colorStr.substring(2).toInt(16)
                         tempColor.darkCurrentColor = colorStr.substring(2).toInt(16)
                     }
+
                     CURRENT_TITLE -> {
                         cCurrentTitleColor.background = JBColor(rgb, rgb)
                         lbCurrentTitle.text = colorStr
                         tempColor.currentTitleColor = colorStr.substring(2).toInt(16)
                         tempColor.darkCurrentTitleColor = colorStr.substring(2).toInt(16)
                     }
+
                     INCOMING -> {
                         cIncomingColor.background = JBColor(rgb, rgb)
                         lbIncomingContent.text = colorStr
                         tempColor.incomingColor = colorStr.substring(2).toInt(16)
                         tempColor.darkIncomingColor = colorStr.substring(2).toInt(16)
                     }
+
                     INCOMING_TITLE -> {
                         cIncomingTitleColor.background = JBColor(rgb, rgb)
                         lbIncomingTitle.text = colorStr
@@ -237,7 +247,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
         return Constants.Resource.SETTINGS_TITLE
     }
 
-    override fun getDisplayName(): @Nls String? {
+    override fun getDisplayName(): String {
         return this.id
     }
 
@@ -260,6 +270,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
     override fun apply() {
         val isModified = isModified
         val persistentState = GlobalSettings.getPersistentState()
+        @Suppress("UNCHECKED_CAST")
         persistentState.markColors = mMarkColors.clone() as LinkedHashMap<String, MarkColor>
         persistentState.schemeName = (cbColorScheme.selectedItem as String)
         if (isModified) {

@@ -21,7 +21,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 class SettingsService : PersistentStateComponent<PersistentState?> {
     var stateValue: PersistentState = PersistentState()
 
-    override fun getState(): PersistentState? {
+    override fun getState(): PersistentState {
         return stateValue
     }
 

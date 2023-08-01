@@ -2,7 +2,7 @@ package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.model.PersistentState
 import cc.duduhuo.git.conflict.setting.SettingsService
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.application.ApplicationManager
 
 
 /**
@@ -16,7 +16,7 @@ import com.intellij.openapi.components.ServiceManager
 object GlobalSettings {
 
     fun getPersistentState(): PersistentState {
-        val service = ServiceManager.getService(SettingsService::class.java)
+        val service = ApplicationManager.getApplication().getService(SettingsService::class.java)
         return service.stateValue
     }
 }

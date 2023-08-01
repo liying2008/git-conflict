@@ -37,5 +37,4 @@
 
 ## Contact Me
 
-CSDN：[http://blog.csdn.net/u012939909](http://blog.csdn.net/u012939909)    
 Email：[liruoer2008@yeah.net](mailto:liruoer2008@yeah.net)  
