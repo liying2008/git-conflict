@@ -47,21 +47,30 @@ abstract class AbsFixConflict : AnAction() {
             if (item.currentChangeMarkerLineNum <= lineNumber && item.incomingChangeMarkerLineNum >= lineNumber) {
                 inConflictPosition = true
                 val start = document.getLineStartOffset(item.currentChangeMarkerLineNum)
-                val end = document.getLineEndOffset(item.incomingChangeMarkerLineNum)
+                val end = if (item.incomingChangeMarkerLineNum == document.lineCount - 1) {
+                    document.getLineEndOffset(item.incomingChangeMarkerLineNum)
+                } else {
+                    document.getLineStartOffset(item.incomingChangeMarkerLineNum + 1)
+                }
                 val replaceStr = when (strategy) {
                     ACCEPT_CURRENT -> {
                         item.currentChangeStr
                     }
+
                     ACCEPT_INCOMING -> {
                         item.incomingChangeStr
                     }
+
                     ACCEPT_BOTH -> {
-                        "${item.currentChangeStr}\n${item.incomingChangeStr}"
+                        "${item.currentChangeStr}${item.incomingChangeStr}"
                     }
+
                     else -> {
+                        // unreachable
                         ""
                     }
                 }
+                // Must use WriteCommandAction to change document text
                 WriteCommandAction.runWriteCommandAction(project) {
                     document.replaceString(start, end, replaceStr)
                 }

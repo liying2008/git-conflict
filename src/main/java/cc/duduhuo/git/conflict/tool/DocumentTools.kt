@@ -65,7 +65,7 @@ object DocumentTools {
                         if (commonMarkerLineNum > -1) commonMarkerLineNum else separatorMarkerLineNum
 
                     val currentStartOffset = document.getLineStartOffset(currentChangeStartLineNum)
-                    val currentEndOffset = document.getLineEndOffset(currentChangeEndLineNum - 1)
+                    val currentEndOffset = document.getLineStartOffset(currentChangeEndLineNum)
                     var currentChangeStr = ""
                     if (currentEndOffset > currentStartOffset) {
                         currentChangeStr = document.getText(TextRange(currentStartOffset, currentEndOffset))
@@ -78,7 +78,7 @@ object DocumentTools {
                     }
                     val commonStr = if (commonMarkerLineNum > -1) {
                         val commonStartOffset = document.getLineStartOffset(commonStartLineNum)
-                        val commonEndOffset = document.getLineEndOffset(commonEndLineNum - 1)
+                        val commonEndOffset = document.getLineStartOffset(commonEndLineNum)
                         if (commonEndOffset > commonStartOffset) {
                             document.getText(TextRange(commonStartOffset, commonEndOffset))
                         } else {
@@ -91,7 +91,7 @@ object DocumentTools {
                     val incomingChangeStartLineNum = separatorMarkerLineNum + 1
                     val incomingChangeEndLineNum = incomingChangeMarkerLineNum
                     val incomingStartOffset = document.getLineStartOffset(incomingChangeStartLineNum)
-                    val incomingEndOffset = document.getLineEndOffset(incomingChangeEndLineNum - 1)
+                    val incomingEndOffset = document.getLineStartOffset(incomingChangeEndLineNum)
                     var incomingChangeStr = ""
                     if (incomingEndOffset > incomingStartOffset) {
                         incomingChangeStr = document.getText(TextRange(incomingStartOffset, incomingEndOffset))
