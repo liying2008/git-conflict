@@ -154,10 +154,13 @@ object DocumentTools {
                         Constants.HIGHLIGHTER_LAYER,
                         TextAttr.incomingHeaderAttributes
                     )
+
+                    // reset marker line num
                     currentChangeMarkerLineNum = -1
                     commonMarkerLineNum = -1
                     separatorMarkerLineNum = -1
                 } else {
+                    // reset marker line num
                     currentChangeMarkerLineNum = -1
                     commonMarkerLineNum = -1
                     separatorMarkerLineNum = -1

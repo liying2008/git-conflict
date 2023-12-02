@@ -9,12 +9,12 @@ import cc.duduhuo.git.conflict.action.HighlightConflictAction
 import cc.duduhuo.git.conflict.model.MarkColor
 import cc.duduhuo.git.conflict.model.PersistentMarkColor
 import cc.duduhuo.git.conflict.tool.ext.formatHexA
+import com.intellij.ui.ColorChooser
 import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
-import javax.swing.JColorChooser
 import javax.swing.JComponent
 import javax.swing.JOptionPane
 import kotlin.collections.LinkedHashMap
@@ -223,7 +223,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
 
                 else -> null
             }
-            val chooseColor = JColorChooser.showDialog(mainPanel, "Choose a color", initialColor)
+            val chooseColor = ColorChooser.chooseColor(mainPanel, "Choose a Color", initialColor, true)
             if (chooseColor != null) {
                 when (fieldIndex) {
                     CURRENT_CONTENT -> {

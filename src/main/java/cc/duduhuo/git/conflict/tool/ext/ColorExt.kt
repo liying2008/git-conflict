@@ -16,22 +16,16 @@ fun Color.transparent(factor: Float): Color {
  * Formats the color as #RRGGBBAA
  */
 fun Color.formatHexA(): String {
-    val sb = StringBuilder()
-    var r = Integer.toHexString(this.red)
-    var g = Integer.toHexString(this.green)
-    var b = Integer.toHexString(this.blue)
-    var a = Integer.toHexString(this.alpha)
+    var r = Integer.toHexString(this.red).uppercase()
+    var g = Integer.toHexString(this.green).uppercase()
+    var b = Integer.toHexString(this.blue).uppercase()
+    var a = Integer.toHexString(this.alpha).uppercase()
     r = if (r.length == 1) "0$r" else r
     g = if (g.length == 1) "0$g" else g
     b = if (b.length == 1) "0$b" else b
     a = if (a.length == 1) "0$a" else a
-    sb.append("#")
-    sb.append(r)
-    sb.append(g)
-    sb.append(b)
-    sb.append(a)
     // return like #00000000
-    return sb.toString()
+    return "#$r$g$b$a"
 }
 
 /**
