@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "cc.duduhuo"
-version = "1.0.5"
+version = "2.0.0"
 
 repositories {
     maven(url = "https://maven.aliyun.com/repository/public")

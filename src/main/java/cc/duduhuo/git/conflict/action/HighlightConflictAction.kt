@@ -1,9 +1,8 @@
 package cc.duduhuo.git.conflict.action
 
-import cc.duduhuo.git.conflict.Global.sDocumentListenerMap
-import cc.duduhuo.git.conflict.Global.sIsHighlightMap
+import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.InDocumentListener
-import cc.duduhuo.git.conflict.tool.DocumentTools.showConflict
+import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
@@ -22,9 +21,9 @@ class HighlightConflictAction : AnAction() {
 
     companion object {
         fun refreshHighlight() {
-            sIsHighlightMap.forEach { (editor, isHighlight) ->
+            Global.isHighlightMap.forEach { (editor, isHighlight) ->
                 if (isHighlight) {
-                    showConflict(editor)
+                    DocumentTools.showConflict(editor)
                 }
             }
         }
@@ -33,7 +32,7 @@ class HighlightConflictAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
-        val hasConflict = showConflict(editor)
+        val hasConflict = DocumentTools.showConflict(editor)
         if (!hasConflict) {
             showNotification(
                 "No Git Conflict", "There is no conflict in the document.",
@@ -41,12 +40,12 @@ class HighlightConflictAction : AnAction() {
             )
             return
         }
-        sIsHighlightMap[editor] = true
-        val oldListener: InDocumentListener? = sDocumentListenerMap[document]
+        Global.isHighlightMap[editor] = true
+        val oldListener: InDocumentListener? = Global.documentListenerMap[document]
         if (oldListener == null) {
             val documentListener = InDocumentListener(editor)
             document.addDocumentListener(documentListener)
-            sDocumentListenerMap[document] = documentListener
+            Global.documentListenerMap[document] = documentListener
         }
     }
 
@@ -57,7 +56,7 @@ class HighlightConflictAction : AnAction() {
         e.presentation.isVisible = false
         val canShow = project != null && editor != null
         if (canShow) {
-            val isHighlight: Boolean = sIsHighlightMap.getOrDefault(editor, false)
+            val isHighlight: Boolean = Global.isHighlightMap.getOrDefault(editor, false)
             // Set visibility only in case of existing project and editor
             if (!isHighlight) {
                 e.presentation.isVisible = true

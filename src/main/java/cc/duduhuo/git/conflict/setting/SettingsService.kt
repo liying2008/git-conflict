@@ -16,7 +16,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil
  */
 @State(
     name = "GitConflict",
-    storages = [Storage(value = "cc.duduhuo.git.conflict.1.applicationConfigurable.xml")]
+    storages = [Storage(value = "cc.duduhuo.git.conflict.2.applicationConfigurable.xml")]
 )
 class SettingsService : PersistentStateComponent<PersistentState?> {
     var stateValue: PersistentState = PersistentState()

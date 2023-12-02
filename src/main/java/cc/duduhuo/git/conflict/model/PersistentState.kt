@@ -12,11 +12,9 @@ import cc.duduhuo.git.conflict.BuiltInColor
  */
 data class PersistentState(
     var schemeName: String = BuiltInColor.DEFAULT_SCHEME_NAME,
-    var markColors: LinkedHashMap<String, MarkColor> = LinkedHashMap(
+    var markColors: LinkedHashMap<String, PersistentMarkColor> = LinkedHashMap(
         mutableMapOf(
-            BuiltInColor.AUTO_SCHEME_NAME to BuiltInColor.AUTO,
-            BuiltInColor.INTELLIJ_SCHEME_NAME to BuiltInColor.INTELLIJ,
-            BuiltInColor.DARCULA_SCHEME_NAME to BuiltInColor.DARCULA
+            BuiltInColor.DEFAULT_SCHEME_NAME to PersistentMarkColor.of(BuiltInColor.DEFAULT),
         )
     )
 )

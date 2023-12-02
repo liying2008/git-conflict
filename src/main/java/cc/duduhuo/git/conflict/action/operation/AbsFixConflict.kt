@@ -42,12 +42,12 @@ abstract class AbsFixConflict : AnAction() {
         val lineNumber = document.getLineNumber(offset)
         // Does the cursor fall in the area of conflict content
         var inConflictPosition = false
-        val conflictItems: List<ConflictItem> = Global.sConflictItemMap[document]!!
+        val conflictItems: List<ConflictItem> = Global.conflictItemMap[document]!!
         for (item in conflictItems) {
-            if (item.currentChangeLineNum <= lineNumber && item.incomingLineNum >= lineNumber) {
+            if (item.currentChangeMarkerLineNum <= lineNumber && item.incomingChangeMarkerLineNum >= lineNumber) {
                 inConflictPosition = true
-                val start = document.getLineStartOffset(item.currentChangeLineNum)
-                val end = document.getLineEndOffset(item.incomingLineNum)
+                val start = document.getLineStartOffset(item.currentChangeMarkerLineNum)
+                val end = document.getLineEndOffset(item.incomingChangeMarkerLineNum)
                 val replaceStr = when (strategy) {
                     ACCEPT_CURRENT -> {
                         item.currentChangeStr

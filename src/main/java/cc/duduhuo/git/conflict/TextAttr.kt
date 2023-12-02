@@ -2,7 +2,6 @@ package cc.duduhuo.git.conflict
 
 import com.intellij.openapi.editor.markup.EffectType
 import com.intellij.openapi.editor.markup.TextAttributes
-import com.intellij.ui.JBColor
 import java.awt.Font
 
 /**
@@ -14,46 +13,46 @@ import java.awt.Font
  * =======================================================
  */
 object TextAttr {
-    lateinit var sCurrentTitleAttributes: TextAttributes
-    lateinit var sCurrentAttributes: TextAttributes
-    lateinit var sIncomingTitleAttributes: TextAttributes
-    lateinit var sIncomingAttributes: TextAttributes
+    lateinit var currentHeaderAttributes: TextAttributes
+    lateinit var currentContentAttributes: TextAttributes
+    lateinit var commonHeaderAttributes: TextAttributes
+    lateinit var commonContentAttributes: TextAttributes
+    lateinit var incomingHeaderAttributes: TextAttributes
+    lateinit var incomingContentAttributes: TextAttributes
 
     init {
         loadTextAttr()
     }
 
     fun loadTextAttr() {
-        sCurrentTitleAttributes = TextAttributes(
+        currentHeaderAttributes = TextAttributes(
             null,
-            JBColor(
-                Global.sCurrentColor.currentTitleColor,
-                Global.sCurrentColor.darkCurrentTitleColor
-            ),
+            Global.currentColor.currentHeaderBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        sCurrentAttributes = TextAttributes(
+        currentContentAttributes = TextAttributes(
             null,
-            JBColor(
-                Global.sCurrentColor.currentColor,
-                Global.sCurrentColor.darkCurrentColor
-            ),
+            Global.currentColor.currentContentBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        sIncomingTitleAttributes = TextAttributes(
+        commonHeaderAttributes = TextAttributes(
             null,
-            JBColor(
-                Global.sCurrentColor.incomingTitleColor,
-                Global.sCurrentColor.darkIncomingTitleColor
-            ),
+            Global.currentColor.commonHeaderBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        sIncomingAttributes = TextAttributes(
+        commonContentAttributes = TextAttributes(
             null,
-            JBColor(
-                Global.sCurrentColor.incomingColor,
-                Global.sCurrentColor.darkIncomingColor
-            ),
+            Global.currentColor.commonContentBackground,
+            null, EffectType.ROUNDED_BOX, Font.PLAIN
+        )
+        incomingHeaderAttributes = TextAttributes(
+            null,
+            Global.currentColor.incomingHeaderBackground,
+            null, EffectType.ROUNDED_BOX, Font.PLAIN
+        )
+        incomingContentAttributes = TextAttributes(
+            null,
+            Global.currentColor.incomingContentBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
     }

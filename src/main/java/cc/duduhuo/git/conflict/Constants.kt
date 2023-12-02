@@ -11,9 +11,10 @@ import com.intellij.openapi.editor.markup.HighlighterLayer
  * =======================================================
  */
 object Constants {
-    const val CURRENT_CHANGE = "<<<<<<< "
-    const val SEPARATOR = "======="
-    const val INCOMING_CHANGE = ">>>>>>> "
+    const val CURRENT_CHANGE_MARKER = "<<<<<<< "
+    const val COMMON_MARKER = "||||||| "
+    const val SEPARATOR_MARKER = "======="
+    const val INCOMING_CHANGE_MARKER = ">>>>>>> "
 
     const val HIGHLIGHTER_LAYER = HighlighterLayer.SELECTION - 1
 
