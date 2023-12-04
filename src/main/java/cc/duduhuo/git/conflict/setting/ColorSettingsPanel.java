@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.components.JBLabel;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -19,14 +20,18 @@ public abstract class ColorSettingsPanel implements SearchableConfigurable {
     protected JPanel mainPanel;
     protected ComboBox<String> cbColorScheme;
     protected JButton btnNew;
-    protected JPanel panelCustom;
-    protected JBLabel cCurrentTitleColor;
-    protected JBLabel cCurrentColor;
-    protected JBLabel cIncomingTitleColor;
-    protected JBLabel cIncomingColor;
-    protected JBLabel lbCurrentTitle;
-    protected JBLabel lbIncomingTitle;
-    protected JBLabel lbCurrentContent;
-    protected JBLabel lbIncomingContent;
     protected JButton btnDelete;
+    protected JPanel panelCustom;
+    protected JBLabel lbCurrentHeaderBackground;
+    protected JBLabel lbCurrentHeader;
+    protected JBLabel lbCurrentContentBackground;
+    protected JBLabel lbCurrentContent;
+    protected JBLabel lbIncomingHeaderBackground;
+    protected JBLabel lbIncomingHeader;
+    protected JBLabel lbIncomingContentBackground;
+    protected JBLabel lbIncomingContent;
+    protected JLabel lbCommonHeaderBackground;
+    protected JLabel lbCommonHeader;
+    protected JLabel lbCommonContentBackground;
+    protected JLabel lbCommonContent;
 }

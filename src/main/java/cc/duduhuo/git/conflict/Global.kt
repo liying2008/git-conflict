@@ -15,18 +15,19 @@ import com.intellij.openapi.editor.Editor
  */
 object Global {
     // is it highlighted
-    val sIsHighlightMap: MutableMap<Editor, Boolean> = mutableMapOf()
+    val isHighlightMap: MutableMap<Editor, Boolean> = mutableMapOf()
 
     // conflict item list
-    val sConflictItemMap: MutableMap<Document, MutableList<ConflictItem>> = mutableMapOf()
+    val conflictItemMap: MutableMap<Document, MutableList<ConflictItem>> = mutableMapOf()
 
     // document listener map
-    val sDocumentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
+    val documentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
 
     // current color scheme
-    var sCurrentColor: MarkColor = MarkColor()
+    // must be var
+    var currentColor: MarkColor = BuiltInColor.DEFAULT
         get() {
             val state = GlobalSettings.getPersistentState()
-            return state.markColors[state.schemeName]!!
+            return state.markColors[state.schemeName]!!.toMarkColor()
         }
 }

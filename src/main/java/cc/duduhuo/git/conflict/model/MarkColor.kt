@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict.model
 
 import cc.duduhuo.git.conflict.BuiltInColor
+import java.awt.Color
 
 /**
  * =======================================================
@@ -11,44 +12,25 @@ import cc.duduhuo.git.conflict.BuiltInColor
  * =======================================================
  */
 data class MarkColor(
-    var schemeName: String = BuiltInColor.AUTO.schemeName,
-    var isBuiltIn: Boolean = BuiltInColor.AUTO.isBuiltIn,
-    var currentTitleColor: Int = BuiltInColor.AUTO.currentTitleColor,
-    var currentColor: Int = BuiltInColor.AUTO.currentColor,
-    var incomingTitleColor: Int = BuiltInColor.AUTO.incomingTitleColor,
-    var incomingColor: Int = BuiltInColor.AUTO.incomingColor,
-    var darkCurrentTitleColor: Int = BuiltInColor.AUTO.darkCurrentTitleColor,
-    var darkCurrentColor: Int = BuiltInColor.AUTO.darkCurrentColor,
-    var darkIncomingTitleColor: Int = BuiltInColor.AUTO.darkIncomingTitleColor,
-    var darkIncomingColor: Int = BuiltInColor.AUTO.darkIncomingColor
+    var schemeName: String = BuiltInColor.DEFAULT.schemeName,
+    var isBuiltIn: Boolean = BuiltInColor.DEFAULT.isBuiltIn,
+    var currentHeaderBackground: Color = BuiltInColor.DEFAULT.currentHeaderBackground,
+    var currentContentBackground: Color = BuiltInColor.DEFAULT.currentContentBackground,
+    var incomingHeaderBackground: Color = BuiltInColor.DEFAULT.incomingHeaderBackground,
+    var incomingContentBackground: Color = BuiltInColor.DEFAULT.incomingContentBackground,
+    var commonHeaderBackground: Color = BuiltInColor.DEFAULT.commonHeaderBackground,
+    var commonContentBackground: Color = BuiltInColor.DEFAULT.commonContentBackground,
 ) {
-    constructor(schemeName: String, isBuiltIn: Boolean, currentTitleColor: Int, currentColor: Int, incomingTitleColor: Int, incomingColor: Int)
-        : this(schemeName, isBuiltIn, currentTitleColor, currentColor, incomingTitleColor, incomingColor, currentTitleColor, currentColor, incomingTitleColor, incomingColor)
 
-    fun setMarkColor(markColor: MarkColor) {
+    fun copyFrom(markColor: MarkColor): MarkColor {
         schemeName = markColor.schemeName
         isBuiltIn = markColor.isBuiltIn
-        currentColor = markColor.currentColor
-        currentTitleColor = markColor.currentTitleColor
-        incomingColor = markColor.incomingColor
-        incomingTitleColor = markColor.incomingTitleColor
-        darkCurrentColor = markColor.darkCurrentColor
-        darkCurrentTitleColor = markColor.darkCurrentTitleColor
-        darkIncomingColor = markColor.darkIncomingColor
-        darkIncomingTitleColor = markColor.darkIncomingTitleColor
-    }
-
-    fun copy(markColor: MarkColor): MarkColor {
-        schemeName = markColor.schemeName
-        isBuiltIn = markColor.isBuiltIn
-        currentColor = markColor.currentColor
-        currentTitleColor = markColor.currentTitleColor
-        incomingColor = markColor.incomingColor
-        incomingTitleColor = markColor.incomingTitleColor
-        darkCurrentColor = markColor.darkCurrentColor
-        darkCurrentTitleColor = markColor.darkCurrentTitleColor
-        darkIncomingColor = markColor.darkIncomingColor
-        darkIncomingTitleColor = markColor.darkIncomingTitleColor
+        currentHeaderBackground = markColor.currentHeaderBackground
+        currentContentBackground = markColor.currentContentBackground
+        incomingHeaderBackground = markColor.incomingHeaderBackground
+        incomingContentBackground = markColor.incomingContentBackground
+        commonHeaderBackground = markColor.commonHeaderBackground
+        commonContentBackground = markColor.commonContentBackground
         return this
     }
 }

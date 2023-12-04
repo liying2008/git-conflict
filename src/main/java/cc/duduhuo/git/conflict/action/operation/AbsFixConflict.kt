@@ -42,26 +42,35 @@ abstract class AbsFixConflict : AnAction() {
         val lineNumber = document.getLineNumber(offset)
         // Does the cursor fall in the area of conflict content
         var inConflictPosition = false
-        val conflictItems: List<ConflictItem> = Global.sConflictItemMap[document]!!
+        val conflictItems: List<ConflictItem> = Global.conflictItemMap[document]!!
         for (item in conflictItems) {
-            if (item.currentChangeLineNum <= lineNumber && item.incomingLineNum >= lineNumber) {
+            if (item.currentChangeMarkerLineNum <= lineNumber && item.incomingChangeMarkerLineNum >= lineNumber) {
                 inConflictPosition = true
-                val start = document.getLineStartOffset(item.currentChangeLineNum)
-                val end = document.getLineEndOffset(item.incomingLineNum)
+                val start = document.getLineStartOffset(item.currentChangeMarkerLineNum)
+                val end = if (item.incomingChangeMarkerLineNum == document.lineCount - 1) {
+                    document.getLineEndOffset(item.incomingChangeMarkerLineNum)
+                } else {
+                    document.getLineStartOffset(item.incomingChangeMarkerLineNum + 1)
+                }
                 val replaceStr = when (strategy) {
                     ACCEPT_CURRENT -> {
                         item.currentChangeStr
                     }
+
                     ACCEPT_INCOMING -> {
                         item.incomingChangeStr
                     }
+
                     ACCEPT_BOTH -> {
-                        "${item.currentChangeStr}\n${item.incomingChangeStr}"
+                        "${item.currentChangeStr}${item.incomingChangeStr}"
                     }
+
                     else -> {
+                        // unreachable
                         ""
                     }
                 }
+                // Must use WriteCommandAction to change document text
                 WriteCommandAction.runWriteCommandAction(project) {
                     document.replaceString(start, end, replaceStr)
                 }

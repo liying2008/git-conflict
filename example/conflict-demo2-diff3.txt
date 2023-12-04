@@ -1,0 +1,27 @@
+aaaa
+<<<<<<< HEAD
+bb22
+||||||| 1b2ad61
+bbbb
+=======
+bb66
+>>>>>>> feat
+cccc
+<<<<<<< HEAD
+d00d
+||||||| 1b2ad61
+dddd
+=======
+d89d
+>>>>>>> feat
+eeee
+ffff
+<<<<<<< HEAD
+gg00
+||||||| 1b2ad61
+gggg
+=======
+g99g
+>>>>>>> feat
+hhhh
+iiii

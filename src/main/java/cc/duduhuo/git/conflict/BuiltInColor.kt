@@ -1,6 +1,8 @@
 package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.model.MarkColor
+import cc.duduhuo.git.conflict.tool.ext.transparent
+import java.awt.Color
 
 /**
  * =======================================================
@@ -10,19 +12,25 @@ import cc.duduhuo.git.conflict.model.MarkColor
  * Remarks:
  * =======================================================
  */
+@Suppress("UseJBColor")
 object BuiltInColor {
-    const val AUTO_SCHEME_NAME = "Auto"
-    const val INTELLIJ_SCHEME_NAME = "IntelliJ"
-    const val DARCULA_SCHEME_NAME = "Darcula"
+    const val DEFAULT_SCHEME_NAME = "VS Code"
 
-    val AUTO = MarkColor(AUTO_SCHEME_NAME, true, 0x9fe3d6, 0xd9f4ef, 0x9fd2ff, 0xd9edff,
-        0x2f7366, 0x25403b, 0x2f628f, 0x25394b)
+    private const val HEADER_TRANSPARENCY = 0.5f
+    private const val CONTENT_TRANSPARENCY = 0.4f;
+    private const val RULER_TRANSPARENCY = 1f;
 
-    val INTELLIJ = MarkColor(INTELLIJ_SCHEME_NAME, true, 0x9fe3d6, 0xd9f4ef, 0x9fd2ff, 0xd9edff)
+    private val currentBaseColor = Color(0x40C8AE).transparent(HEADER_TRANSPARENCY)
+    private val incomingBaseColor = Color(0x40A6FF).transparent(HEADER_TRANSPARENCY)
+    private val commonBaseColor = Color(0x606060).transparent(0.4f)
 
-    val DARCULA = MarkColor(DARCULA_SCHEME_NAME, true, 0x2f7366, 0x25403b, 0x2f628f, 0x25394b)
-
-    const val DEFAULT_SCHEME_NAME = AUTO_SCHEME_NAME
-
-    val DEFAULT_MARK_COLOR = AUTO
+    val DEFAULT = MarkColor(
+        DEFAULT_SCHEME_NAME, true,
+        currentBaseColor,
+        currentBaseColor.transparent(CONTENT_TRANSPARENCY),
+        incomingBaseColor,
+        incomingBaseColor.transparent(CONTENT_TRANSPARENCY),
+        commonBaseColor,
+        commonBaseColor.transparent(CONTENT_TRANSPARENCY)
+    )
 }

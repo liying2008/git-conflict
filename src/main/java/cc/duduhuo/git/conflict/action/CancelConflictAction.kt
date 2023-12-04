@@ -1,8 +1,6 @@
 package cc.duduhuo.git.conflict.action
 
 import cc.duduhuo.git.conflict.Global
-import cc.duduhuo.git.conflict.Global.sConflictItemMap
-import cc.duduhuo.git.conflict.Global.sIsHighlightMap
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -20,15 +18,15 @@ class CancelConflictAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
-        sIsHighlightMap[editor] = false
-        sConflictItemMap.remove(document)
+        Global.isHighlightMap[editor] = false
+        Global.conflictItemMap.remove(document)
         val markupModel = editor.markupModel
         markupModel.removeAllHighlighters()
         // remove document listener
-        val listener = Global.sDocumentListenerMap[document]
+        val listener = Global.documentListenerMap[document]
         if (listener != null) {
             document.removeDocumentListener(listener)
-            Global.sDocumentListenerMap.remove(document)
+            Global.documentListenerMap.remove(document)
         }
     }
 
@@ -40,7 +38,7 @@ class CancelConflictAction : AnAction() {
         e.presentation.isVisible = false
         val canShow = project != null && editor != null
         if (canShow) {
-            val isHighlight: Boolean = sIsHighlightMap.getOrDefault(editor, false)
+            val isHighlight: Boolean = Global.isHighlightMap.getOrDefault(editor, false)
             if (isHighlight) {
                 e.presentation.isVisible = true
             }

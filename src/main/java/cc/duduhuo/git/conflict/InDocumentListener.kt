@@ -1,9 +1,6 @@
 package cc.duduhuo.git.conflict
 
-import cc.duduhuo.git.conflict.Global.sConflictItemMap
-import cc.duduhuo.git.conflict.Global.sDocumentListenerMap
-import cc.duduhuo.git.conflict.Global.sIsHighlightMap
-import cc.duduhuo.git.conflict.tool.DocumentTools.showConflict
+import cc.duduhuo.git.conflict.tool.DocumentTools
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.event.DocumentEvent
 import com.intellij.openapi.editor.event.DocumentListener
@@ -16,18 +13,18 @@ import com.intellij.openapi.editor.event.DocumentListener
  * Remarks:
  * =======================================================
  */
-class InDocumentListener(private val mEditor: Editor) : DocumentListener {
+class InDocumentListener(private val editor: Editor) : DocumentListener {
 
     override fun documentChanged(event: DocumentEvent) {
-        val hasConflict = showConflict(mEditor)
+        val hasConflict = DocumentTools.showConflict(editor)
         if (!hasConflict) {
-            val document = mEditor.document
-            sIsHighlightMap[mEditor] = false
-            sConflictItemMap.remove(document)
-            val listener = sDocumentListenerMap[document]
+            val document = editor.document
+            Global.isHighlightMap[editor] = false
+            Global.conflictItemMap.remove(document)
+            val listener = Global.documentListenerMap[document]
             if (listener != null) {
                 document.removeDocumentListener(listener)
-                sDocumentListenerMap.remove(document)
+                Global.documentListenerMap.remove(document)
             }
         }
     }
