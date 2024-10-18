@@ -4,7 +4,6 @@ import cc.duduhuo.git.conflict.BuiltInColor
 import cc.duduhuo.git.conflict.Constants
 import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.GlobalSettings
-import cc.duduhuo.git.conflict.TextAttr
 import cc.duduhuo.git.conflict.action.HighlightConflictAction
 import cc.duduhuo.git.conflict.model.MarkColor
 import cc.duduhuo.git.conflict.model.PersistentMarkColor
@@ -307,7 +306,6 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
             schemeInUse = cbColorScheme.selectedItem as String
             markColorInUse.copyFrom(markColorMap[schemeInUse]!!)
             Global.currentColor = markColorInUse
-            TextAttr.loadTextAttr()
             HighlightConflictAction.refreshHighlight()
         }
     }

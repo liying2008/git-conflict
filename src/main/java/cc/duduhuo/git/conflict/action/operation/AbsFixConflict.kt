@@ -4,6 +4,7 @@ import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.model.ConflictItem
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
@@ -81,5 +82,9 @@ abstract class AbsFixConflict : AnAction() {
             JBPopupFactory.getInstance().createMessage("Conflict content is not detected in this location.")
                 .showInBestPositionFor(editor)
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.EDT
     }
 }

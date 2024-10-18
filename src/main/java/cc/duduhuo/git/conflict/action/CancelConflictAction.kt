@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict.action
 
 import cc.duduhuo.git.conflict.Global
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -43,5 +44,9 @@ class CancelConflictAction : AnAction() {
                 e.presentation.isVisible = true
             }
         }
+    }
+
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.EDT
     }
 }
