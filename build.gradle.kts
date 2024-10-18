@@ -1,11 +1,11 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.8.22"
-    id("org.jetbrains.intellij") version "1.14.1"
+    id("org.jetbrains.kotlin.jvm") version "1.9.25"
+    id("org.jetbrains.intellij") version "1.17.4"
 }
 
 group = "cc.duduhuo"
-version = "2.0.0"
+version = "2.0.1"
 
 repositories {
     maven(url = "https://maven.aliyun.com/repository/public")
@@ -13,11 +13,13 @@ repositories {
     mavenCentral()
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
+// Configure Gradle IntelliJ Plugin
+// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2022.2.5")
-    // version.set("2023.2")
-    pluginName.set("git-conflict")
+    version.set("2022.3")
+    type.set("IC") // Target IDE Platform
+
+    plugins.set(listOf(/* Plugin Dependencies */))
 }
 
 tasks {
@@ -32,7 +34,7 @@ tasks {
 
     patchPluginXml {
         // please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description
-        sinceBuild.set("222")
+        sinceBuild.set("223")
         untilBuild.set("")
         pluginDescription.set(file("description.html").readText())
         changeNotes.set(file("changeNotes.html").readText())

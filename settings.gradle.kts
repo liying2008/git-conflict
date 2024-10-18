@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'git-conflict'
+rootProject.name = "git-conflict"
