@@ -30,10 +30,19 @@ object DocumentTools {
         val textArr = text.split("\n")
         markupModel.removeAllHighlighters()
         Global.conflictItemMap.remove(document)
+
+        val currentHeaderAttributes = TextAttr.getCurrentHeaderAttributes()
+        val currentContentAttributes = TextAttr.getCurrentContentAttributes()
+        val commonHeaderAttributes = TextAttr.getCommonHeaderAttributes()
+        val commonContentAttributes = TextAttr.getCommonContentAttributes()
+        val incomingHeaderAttributes = TextAttr.getIncomingHeaderAttributes()
+        val incomingContentAttributes = TextAttr.getIncomingContentAttributes()
+
         var currentChangeMarkerLineNum = -1
         var commonMarkerLineNum = -1
         var separatorMarkerLineNum = -1
         var incomingChangeMarkerLineNum = -1
+
         val conflictItems = mutableListOf<ConflictItem>()
         textArr.forEachIndexed { index, line ->
             if (line.startsWith(Constants.CURRENT_CHANGE_MARKER)) {
@@ -118,26 +127,26 @@ object DocumentTools {
                     markupModel.addLineHighlighter(
                         currentChangeMarkerLineNum,
                         Constants.HIGHLIGHTER_LAYER,
-                        TextAttr.currentHeaderAttributes
+                        currentHeaderAttributes
                     )
                     for (j in currentChangeStartLineNum until currentChangeEndLineNum) {
                         markupModel.addLineHighlighter(
                             j,
                             Constants.HIGHLIGHTER_LAYER,
-                            TextAttr.currentContentAttributes
+                            currentContentAttributes
                         )
                     }
                     if (commonMarkerLineNum > -1) {
                         markupModel.addLineHighlighter(
                             commonMarkerLineNum,
                             Constants.HIGHLIGHTER_LAYER,
-                            TextAttr.commonHeaderAttributes
+                            commonHeaderAttributes
                         )
                         for (j in commonStartLineNum until commonEndLineNum) {
                             markupModel.addLineHighlighter(
                                 j,
                                 Constants.HIGHLIGHTER_LAYER,
-                                TextAttr.commonContentAttributes
+                                commonContentAttributes
                             )
                         }
                     }
@@ -146,13 +155,13 @@ object DocumentTools {
                         markupModel.addLineHighlighter(
                             j,
                             Constants.HIGHLIGHTER_LAYER,
-                            TextAttr.incomingContentAttributes
+                            incomingContentAttributes
                         )
                     }
                     markupModel.addLineHighlighter(
                         incomingChangeMarkerLineNum,
                         Constants.HIGHLIGHTER_LAYER,
-                        TextAttr.incomingHeaderAttributes
+                        incomingHeaderAttributes
                     )
 
                     // reset marker line num

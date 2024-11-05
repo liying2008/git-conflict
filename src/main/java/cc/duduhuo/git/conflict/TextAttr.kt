@@ -13,44 +13,48 @@ import java.awt.Font
  * =======================================================
  */
 object TextAttr {
-    lateinit var currentHeaderAttributes: TextAttributes
-    lateinit var currentContentAttributes: TextAttributes
-    lateinit var commonHeaderAttributes: TextAttributes
-    lateinit var commonContentAttributes: TextAttributes
-    lateinit var incomingHeaderAttributes: TextAttributes
-    lateinit var incomingContentAttributes: TextAttributes
-
-    init {
-        loadTextAttr()
-    }
-
-    fun loadTextAttr() {
-        currentHeaderAttributes = TextAttributes(
+    fun getCurrentHeaderAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.currentHeaderBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        currentContentAttributes = TextAttributes(
+    }
+
+    fun getCurrentContentAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.currentContentBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        commonHeaderAttributes = TextAttributes(
+    }
+
+    fun getCommonHeaderAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.commonHeaderBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        commonContentAttributes = TextAttributes(
+    }
+
+    fun getCommonContentAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.commonContentBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        incomingHeaderAttributes = TextAttributes(
+    }
+
+    fun getIncomingHeaderAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.incomingHeaderBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
         )
-        incomingContentAttributes = TextAttributes(
+    }
+
+    fun getIncomingContentAttributes(): TextAttributes {
+        return TextAttributes(
             null,
             Global.currentColor.incomingContentBackground,
             null, EffectType.ROUNDED_BOX, Font.PLAIN
