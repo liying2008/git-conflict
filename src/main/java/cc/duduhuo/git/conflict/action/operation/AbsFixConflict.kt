@@ -3,11 +3,15 @@ package cc.duduhuo.git.conflict.action.operation
 import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.model.ConflictItem
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.popup.JBPopupFactory
 
@@ -29,12 +33,25 @@ abstract class AbsFixConflict : AnAction() {
     @Retention(AnnotationRetention.SOURCE)
     annotation class STRATEGY
 
-    protected fun fixConflict(editor: Editor, project: Project?, @STRATEGY strategy: Int) {
+    protected fun fixConflict(editor: Editor, project: Project, @STRATEGY strategy: Int) {
         val document = editor.document
         if (!document.isWritable) {
+            val fileEditorManager = FileEditorManager.getInstance(project)
+            val selectedEditor = fileEditorManager.selectedEditor!!
+            val file = selectedEditor.file
             showNotification(
-                "Fix Git Conflict", "This document can not be written.",
-                NotificationType.WARNING
+                file.name,
+                "The document is not writable.",
+                NotificationType.WARNING,
+                project,
+                listOf(
+                    object : NotificationAction("Open file") {
+                        override fun actionPerformed(e: AnActionEvent, notification: Notification) {
+                            fileEditorManager.openFile(file, true)
+                            notification.expire()  // close notification
+                        }
+                    }
+                )
             )
             return
         }

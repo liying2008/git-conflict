@@ -12,10 +12,10 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
  * =======================================================
  */
 class AcceptBothChangesAction : AbsFixConflict() {
-    
+
     override fun actionPerformed(e: AnActionEvent) {
-        val editor = e.getRequiredData(CommonDataKeys.EDITOR)
-        val project = e.project
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
+        val project = e.project ?: return
         fixConflict(editor, project, ACCEPT_BOTH)
     }
 }

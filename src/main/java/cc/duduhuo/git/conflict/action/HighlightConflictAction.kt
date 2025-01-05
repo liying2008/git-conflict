@@ -4,11 +4,14 @@ import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.InDocumentListener
 import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
+import com.intellij.notification.Notification
+import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.fileEditor.FileEditorManager
 
 /**
  * =======================================================
@@ -31,18 +34,47 @@ class HighlightConflictAction : AnAction() {
     }
 
     override fun actionPerformed(e: AnActionEvent) {
+        val project = e.project ?: return
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
-        val hasConflict = DocumentTools.showConflict(editor)
-        if (!hasConflict) {
+        val conflictsCount = DocumentTools.showConflict(editor)
+        val fileEditorManager = FileEditorManager.getInstance(project)
+        val selectedEditor = fileEditorManager.selectedEditor!!
+        val file = selectedEditor.file
+        if (conflictsCount == 0) {
             showNotification(
-                "No Git Conflict", "There is no conflict in the document.",
-                NotificationType.INFORMATION
+                file.name,
+                "No conflicts detected.",
+                NotificationType.INFORMATION,
+                project,
+                listOf(
+                    object : NotificationAction("Open file") {
+                        override fun actionPerformed(e: AnActionEvent, notification: Notification) {
+                            fileEditorManager.openFile(file, true)
+                            notification.expire()  // close notification
+                        }
+                    }
+                )
             )
             return
         }
+
+        showNotification(
+            file.name,
+            "The document has $conflictsCount conflict(s).",
+            NotificationType.WARNING,
+            project,
+            listOf(
+                object : NotificationAction("Open file") {
+                    override fun actionPerformed(e: AnActionEvent, notification: Notification) {
+                        fileEditorManager.openFile(file, true)
+                        notification.expire()  // close notification
+                    }
+                }
+            )
+        )
         Global.isHighlightMap[editor] = true
-        val oldListener: InDocumentListener? = Global.documentListenerMap[document]
+        val oldListener = Global.documentListenerMap[document]
         if (oldListener == null) {
             val documentListener = InDocumentListener(editor)
             document.addDocumentListener(documentListener)

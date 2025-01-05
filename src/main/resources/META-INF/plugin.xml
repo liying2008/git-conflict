@@ -22,6 +22,10 @@
         <applicationService
                 serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsService"/>
     </extensions>
+    <applicationListeners>
+        <listener class="cc.duduhuo.git.conflict.startup.FileOpenListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </applicationListeners>
     <actions>
         <action id="GitConflict.Highlight" class="cc.duduhuo.git.conflict.action.HighlightConflictAction"
                 text="Highlight Git Conflict"

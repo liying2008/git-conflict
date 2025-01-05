@@ -17,6 +17,6 @@ object GlobalSettings {
 
     fun getPersistentState(): PersistentState {
         val service = ApplicationManager.getApplication().getService(SettingsService::class.java)
-        return service.stateValue
+        return service.state
     }
 }

@@ -1,6 +1,7 @@
 package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.tool.DocumentTools
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.event.DocumentEvent
 import com.intellij.openapi.editor.event.DocumentListener
@@ -14,10 +15,15 @@ import com.intellij.openapi.editor.event.DocumentListener
  * =======================================================
  */
 class InDocumentListener(private val editor: Editor) : DocumentListener {
+    private val logger = Logger.getInstance(InDocumentListener::class.java)
 
     override fun documentChanged(event: DocumentEvent) {
-        val hasConflict = DocumentTools.showConflict(editor)
-        if (!hasConflict) {
+        if (editor.isDisposed) {
+            logger.info("editor is disposed: $editor")
+            return
+        }
+        val conflictsCount = DocumentTools.showConflict(editor)
+        if (conflictsCount == 0) {
             val document = editor.document
             Global.isHighlightMap[editor] = false
             Global.conflictItemMap.remove(document)

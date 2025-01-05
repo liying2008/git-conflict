@@ -5,6 +5,7 @@ import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.TextAttr
 import cc.duduhuo.git.conflict.model.ConflictItem
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.util.TextRange
 
 /**
@@ -20,10 +21,9 @@ object DocumentTools {
      * Displays conflicts in document.
      *
      * @param editor
-     * @return false: no conflicts; true: there is(are) conflict(s)
+     * @return number of conflicts
      */
-    fun showConflict(editor: Editor): Boolean {
-        var hasConflict = false
+    fun showConflict(editor: Editor): Int {
         val document = editor.document
         val markupModel = editor.markupModel
         val text = document.text
@@ -65,7 +65,6 @@ object DocumentTools {
                 }
             } else if (line.startsWith(Constants.INCOMING_CHANGE_MARKER)) {
                 if (currentChangeMarkerLineNum > -1 && separatorMarkerLineNum > -1) {
-                    hasConflict = true
                     incomingChangeMarkerLineNum = index
 
                     // get conflict content
@@ -178,6 +177,6 @@ object DocumentTools {
             }
         }
         Global.conflictItemMap[document] = conflictItems
-        return hasConflict
+        return conflictItems.size
     }
 }

@@ -2,8 +2,10 @@ package cc.duduhuo.git.conflict.tool
 
 import cc.duduhuo.git.conflict.Constants
 import com.intellij.notification.Notification
+import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
+import com.intellij.openapi.project.Project
 
 /**
  * =======================================================
@@ -14,10 +16,17 @@ import com.intellij.notification.Notifications
  * =======================================================
  */
 object NotificationTools {
-    fun showNotification(title: String, content: String, type: NotificationType) {
+    fun showNotification(
+        title: String, content: String, type: NotificationType,
+        project: Project? = null,
+        actions: Collection<NotificationAction>? = null
+    ) {
         val notification = Notification(
             Constants.Resource.NOTIFICATION_GROUP_DISPLAY_ID, title, content, type
         )
-        Notifications.Bus.notify(notification)
+        if (actions != null) {
+            notification.addActions(actions)
+        }
+        Notifications.Bus.notify(notification, project)
     }
 }

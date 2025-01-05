@@ -2,6 +2,7 @@ package cc.duduhuo.git.conflict.setting
 
 import cc.duduhuo.git.conflict.model.PersistentState
 import com.intellij.openapi.components.PersistentStateComponent
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.util.xmlb.XmlSerializerUtil
@@ -14,12 +15,13 @@ import com.intellij.util.xmlb.XmlSerializerUtil
  * Remarks:
  * =======================================================
  */
+@Service(value = [Service.Level.APP])
 @State(
     name = "GitConflict",
     storages = [Storage(value = "cc.duduhuo.git.conflict.2.applicationConfigurable.xml")]
 )
 class SettingsService : PersistentStateComponent<PersistentState?> {
-    var stateValue: PersistentState = PersistentState()
+    private val stateValue: PersistentState = PersistentState()
 
     override fun getState(): PersistentState {
         return stateValue
