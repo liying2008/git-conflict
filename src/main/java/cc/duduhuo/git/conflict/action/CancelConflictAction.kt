@@ -1,7 +1,7 @@
 package cc.duduhuo.git.conflict.action
 
 import cc.duduhuo.git.conflict.Global
-import cc.duduhuo.git.conflict.tool.EditorTools.removeConflictHighlightersIfAny
+import cc.duduhuo.git.conflict.tool.ext.removeConflictHighlightersIfAny
 import cc.duduhuo.git.conflict.tool.ext.removeInDocumentListenerIfExist
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction

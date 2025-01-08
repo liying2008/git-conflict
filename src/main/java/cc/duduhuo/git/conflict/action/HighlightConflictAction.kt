@@ -24,11 +24,12 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 class HighlightConflictAction : AnAction() {
 
     companion object {
-        fun refreshHighlight() {
-            Global.highlighterMap.forEach { (editor, highlighters) ->
-                if (highlighters.isNotEmpty()) {
-                    DocumentTools.showConflict(editor)
-                }
+        fun refreshHighlighters() {
+            // all editors with conflicts
+            val editors = Global.highlighterMap.filter { it.value.isNotEmpty() }.map { it.key }
+            editors.forEach {
+                // DocumentTools.showConflict() 会修改 Global.highlighterMap，所以不能直接在迭代 Global.highlighterMap 时调用，会导致 ConcurrentModificationException
+                DocumentTools.showConflict(it)
             }
         }
     }

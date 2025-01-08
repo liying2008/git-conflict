@@ -308,7 +308,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
             schemeInUse = cbColorScheme.selectedItem as String
             markColorInUse.copyFrom(markColorMap[schemeInUse]!!)
             Global.currentColor = markColorInUse
-            HighlightConflictAction.refreshHighlight()
+            HighlightConflictAction.refreshHighlighters()
         }
     }
 }

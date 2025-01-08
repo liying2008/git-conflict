@@ -4,7 +4,7 @@ import cc.duduhuo.git.conflict.Constants
 import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.TextAttr
 import cc.duduhuo.git.conflict.model.ConflictItem
-import cc.duduhuo.git.conflict.tool.EditorTools.removeConflictHighlightersIfAny
+import cc.duduhuo.git.conflict.tool.ext.removeConflictHighlightersIfAny
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.markup.RangeHighlighter
