@@ -4,6 +4,7 @@ import cc.duduhuo.git.conflict.model.ConflictItem
 import cc.duduhuo.git.conflict.model.MarkColor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.markup.RangeHighlighter
 
 /**
  * =======================================================
@@ -14,13 +15,13 @@ import com.intellij.openapi.editor.Editor
  * =======================================================
  */
 object Global {
-    // is it highlighted
-    val isHighlightMap: MutableMap<Editor, Boolean> = mutableMapOf()
+    // highlighter map to editor
+    val highlighterMap: MutableMap<Editor, List<RangeHighlighter>> = mutableMapOf()
 
-    // conflict item list
-    val conflictItemMap: MutableMap<Document, MutableList<ConflictItem>> = mutableMapOf()
+    // conflict item map to document
+    val conflictItemMap: MutableMap<Document, List<ConflictItem>> = mutableMapOf()
 
-    // document listener map
+    // document listener map to document
     val documentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
 
     // current color scheme

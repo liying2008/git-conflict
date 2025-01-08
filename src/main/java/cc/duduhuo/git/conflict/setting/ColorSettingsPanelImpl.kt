@@ -25,14 +25,16 @@ import javax.swing.JOptionPane
  * Remarks:
  * =======================================================
  */
-const val CURRENT_CONTENT = 0
-const val CURRENT_HEADER = 1
-const val INCOMING_CONTENT = 2
-const val INCOMING_HEADER = 3
-const val COMMON_CONTENT = 4
-const val COMMON_HEADER = 5
-
 class ColorSettingsPanelImpl : ColorSettingsPanel() {
+    companion object {
+        const val CURRENT_CONTENT = 0
+        const val CURRENT_HEADER = 1
+        const val INCOMING_CONTENT = 2
+        const val INCOMING_HEADER = 3
+        const val COMMON_CONTENT = 4
+        const val COMMON_HEADER = 5
+    }
+
     private val markColorInUse = MarkColor()
     private lateinit var markColorMap: LinkedHashMap<String, MarkColor>
     private lateinit var schemeInUse: String

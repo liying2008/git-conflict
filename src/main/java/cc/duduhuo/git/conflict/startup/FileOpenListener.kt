@@ -1,9 +1,8 @@
 package cc.duduhuo.git.conflict.startup
 
-import cc.duduhuo.git.conflict.Global
-import cc.duduhuo.git.conflict.InDocumentListener
 import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
+import cc.duduhuo.git.conflict.tool.ext.addInDocumentListenerIfNot
 import com.intellij.largeFilesEditor.editor.LargeFileEditor
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
@@ -72,13 +71,9 @@ class FileOpenListener : FileEditorManagerListener {
                 }
             )
         )
-        Global.isHighlightMap[editor.editor] = true
+
         val document = editor.editor.document
-        val oldListener = Global.documentListenerMap[document]
-        if (oldListener == null) {
-            val documentListener = InDocumentListener(editor.editor)
-            document.addDocumentListener(documentListener)
-            Global.documentListenerMap[document] = documentListener
-        }
+        // add document listener
+        document.addInDocumentListenerIfNot(editor.editor)
     }
 }

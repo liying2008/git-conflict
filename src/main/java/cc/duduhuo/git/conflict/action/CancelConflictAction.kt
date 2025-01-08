@@ -1,6 +1,8 @@
 package cc.duduhuo.git.conflict.action
 
 import cc.duduhuo.git.conflict.Global
+import cc.duduhuo.git.conflict.tool.EditorTools.removeConflictHighlightersIfAny
+import cc.duduhuo.git.conflict.tool.ext.removeInDocumentListenerIfExist
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -19,28 +21,23 @@ class CancelConflictAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
-        Global.isHighlightMap[editor] = false
+
+        editor.removeConflictHighlightersIfAny()
         Global.conflictItemMap.remove(document)
-        val markupModel = editor.markupModel
-        markupModel.removeAllHighlighters()
         // remove document listener
-        val listener = Global.documentListenerMap[document]
-        if (listener != null) {
-            document.removeDocumentListener(listener)
-            Global.documentListenerMap.remove(document)
-        }
+        document.removeInDocumentListenerIfExist()
     }
 
     override fun update(e: AnActionEvent) {
         // Get required data keys
         val project = e.project
         val editor = e.getData(CommonDataKeys.EDITOR)
-        // Set visibility only in case of existing project and editor
         e.presentation.isVisible = false
         val canShow = project != null && editor != null
         if (canShow) {
-            val isHighlight: Boolean = Global.isHighlightMap.getOrDefault(editor, false)
-            if (isHighlight) {
+            // Set visibility only in case of existing project and editor
+            if (!Global.highlighterMap[editor].isNullOrEmpty()) {
+                // have conflict highlights
                 e.presentation.isVisible = true
             }
         }

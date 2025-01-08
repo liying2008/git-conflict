@@ -2,6 +2,7 @@ package cc.duduhuo.git.conflict.action.operation
 
 import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.model.ConflictItem
+import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
@@ -23,17 +24,21 @@ import com.intellij.openapi.ui.popup.JBPopupFactory
  * Remarks:
  * =======================================================
  */
-const val ACCEPT_CURRENT = 0
-const val ACCEPT_INCOMING = 1
-const val ACCEPT_BOTH = 2
-
 abstract class AbsFixConflict : AnAction() {
+    companion object {
+        const val ACCEPT_CURRENT = 0
+        const val ACCEPT_INCOMING = 1
+        const val ACCEPT_BOTH = 2
+    }
 
-    @IntDef([ACCEPT_CURRENT, ACCEPT_INCOMING, ACCEPT_BOTH])
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class STRATEGY
-
-    protected fun fixConflict(editor: Editor, project: Project, @STRATEGY strategy: Int) {
+    /**
+     * fix a conflict with the specified strategy.
+     *
+     * @param editor
+     * @param project
+     * @param strategy the strategy must be one of `ACCEPT_CURRENT`, `ACCEPT_INCOMING`, or `ACCEPT_BOTH` .
+     */
+    protected fun fixConflict(editor: Editor, project: Project, strategy: Int) {
         val document = editor.document
         if (!document.isWritable) {
             val fileEditorManager = FileEditorManager.getInstance(project)
@@ -60,7 +65,7 @@ abstract class AbsFixConflict : AnAction() {
         val lineNumber = document.getLineNumber(offset)
         // Does the cursor fall in the area of conflict content
         var inConflictPosition = false
-        val conflictItems: List<ConflictItem> = Global.conflictItemMap[document]!!
+        val conflictItems = Global.conflictItemMap[document]!!
         for (item in conflictItems) {
             if (item.currentChangeMarkerLineNum <= lineNumber && item.incomingChangeMarkerLineNum >= lineNumber) {
                 inConflictPosition = true
@@ -72,15 +77,19 @@ abstract class AbsFixConflict : AnAction() {
                 }
                 val replaceStr = when (strategy) {
                     ACCEPT_CURRENT -> {
-                        item.currentChangeStr
+                        DocumentTools.getConflictSectionString(document, item, DocumentTools.SECTION_CURRENT)
                     }
 
                     ACCEPT_INCOMING -> {
-                        item.incomingChangeStr
+                        DocumentTools.getConflictSectionString(document, item, DocumentTools.SECTION_INCOMING)
                     }
 
                     ACCEPT_BOTH -> {
-                        "${item.currentChangeStr}${item.incomingChangeStr}"
+                        val currentSection =
+                            DocumentTools.getConflictSectionString(document, item, DocumentTools.SECTION_CURRENT)
+                        val incomingSection =
+                            DocumentTools.getConflictSectionString(document, item, DocumentTools.SECTION_INCOMING)
+                        "${currentSection}${incomingSection}"
                     }
 
                     else -> {

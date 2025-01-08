@@ -16,6 +16,15 @@ import com.intellij.openapi.project.Project
  * =======================================================
  */
 object NotificationTools {
+    /**
+     * Show a notification to the user.
+     *
+     * @param title title of the notification
+     * @param content content of the notification
+     * @param type type of the notification, see [NotificationType]
+     * @param project the project, if not null, the notification will be shown in the project scope
+     * @param actions the actions, if not null, the notification will have the actions
+     */
     fun showNotification(
         title: String, content: String, type: NotificationType,
         project: Project? = null,

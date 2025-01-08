@@ -22,8 +22,4 @@ data class ConflictItem(
     var incomingChangeMarkerLineNum: Int = -1,
     var incomingChangeStartLineNum: Int = -1,
     var incomingChangeEndLineNum: Int = -1,
-
-    var currentChangeStr: String = "",
-    var commonStr: String = "",
-    var incomingChangeStr: String = "",
 )

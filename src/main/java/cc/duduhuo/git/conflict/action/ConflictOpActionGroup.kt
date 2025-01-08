@@ -20,12 +20,12 @@ class ConflictOpActionGroup : DefaultActionGroup() {
         // Get required data keys
         val project = e.project
         val editor = e.getData(CommonDataKeys.EDITOR)
-        // Set visibility only in case of existing project and editor
         e.presentation.isVisible = false
         val canShow = project != null && editor != null
         if (canShow) {
-            val isHighlight: Boolean = Global.isHighlightMap.getOrDefault(editor, false)
-            if (isHighlight) {
+            // Set visibility only in case of existing project and editor
+            if (!Global.highlighterMap[editor].isNullOrEmpty()) {
+                // have conflict highlights
                 e.presentation.isVisible = true
             }
         }
