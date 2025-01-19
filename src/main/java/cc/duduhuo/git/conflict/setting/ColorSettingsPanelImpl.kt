@@ -38,6 +38,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
     private val markColorInUse = MarkColor()
     private lateinit var markColorMap: LinkedHashMap<String, MarkColor>
     private lateinit var schemeInUse: String
+    private var autoDetectConflictsWhenFileOpened: Boolean = false
     private val allSchemeNames: MutableList<String> = mutableListOf()
 
     init {
@@ -65,6 +66,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
         val persistentState = GlobalSettings.getPersistentState()
         markColorMap = convertPersistentMarkColorMapToMarkColorMap(persistentState.markColors)
         schemeInUse = persistentState.schemeName
+        autoDetectConflictsWhenFileOpened = persistentState.autoDetectConflictsWhenFileOpened
 
         // make sure the built-in color is displayed at the top.
         cbColorScheme.addItem(BuiltInColor.DEFAULT_SCHEME_NAME)
@@ -75,6 +77,7 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
             }
             allSchemeNames.add(schemeName)
         }
+        cbAutoDetectConflictsWhenFileOpened.isSelected = autoDetectConflictsWhenFileOpened
         // Double check.
         if (schemeInUse in markColorMap) {
             cbColorScheme.selectedItem = schemeInUse
@@ -287,28 +290,48 @@ class ColorSettingsPanelImpl : ColorSettingsPanel() {
         return mainPanel
     }
 
-    override fun isModified(): Boolean {
-        return if (cbColorScheme.selectedItem !== schemeInUse) {
-            true
-        } else {
-            markColorInUse != markColorMap[cbColorScheme.selectedItem as String]
+    private fun isColorSchemeModified(): Boolean {
+        if (cbColorScheme.selectedItem !== schemeInUse) {
+            return true
         }
+        if (markColorInUse != markColorMap[cbColorScheme.selectedItem as String]) {
+            return true
+        }
+        return false
+    }
+
+    override fun isModified(): Boolean {
+        if (isColorSchemeModified()) {
+            return true
+        }
+        if (cbAutoDetectConflictsWhenFileOpened.isSelected != autoDetectConflictsWhenFileOpened) {
+            return true
+        }
+        return false
     }
 
     override fun reset() {
         cbColorScheme.selectedItem = schemeInUse
+        cbAutoDetectConflictsWhenFileOpened.isSelected = autoDetectConflictsWhenFileOpened
     }
 
     override fun apply() {
-        val isModified = isModified
+        val isColorSchemeModified = isColorSchemeModified()
+        val isModified = isModified()
         val persistentState = GlobalSettings.getPersistentState()
         persistentState.markColors = convertMarkColorMapToPersistentMarkColorMap(markColorMap)
         persistentState.schemeName = (cbColorScheme.selectedItem as String)
+        persistentState.autoDetectConflictsWhenFileOpened = cbAutoDetectConflictsWhenFileOpened.isSelected
         if (isModified) {
             schemeInUse = cbColorScheme.selectedItem as String
             markColorInUse.copyFrom(markColorMap[schemeInUse]!!)
+            autoDetectConflictsWhenFileOpened = cbAutoDetectConflictsWhenFileOpened.isSelected
             Global.currentColor = markColorInUse
-            HighlightConflictAction.refreshHighlighters()
+            Global.autoDetectConflictsWhenFileOpened = autoDetectConflictsWhenFileOpened
+            if (isColorSchemeModified) {
+                // println("[ColorSchemeModified] Global.currentColor: ${Global.currentColor}")
+                HighlightConflictAction.refreshHighlighters()
+            }
         }
     }
 }

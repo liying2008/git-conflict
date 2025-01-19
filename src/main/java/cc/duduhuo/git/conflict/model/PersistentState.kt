@@ -16,5 +16,6 @@ data class PersistentState(
         mutableMapOf(
             BuiltInColor.DEFAULT_SCHEME_NAME to PersistentMarkColor.of(BuiltInColor.DEFAULT),
         )
-    )
+    ),
+    var autoDetectConflictsWhenFileOpened: Boolean = true,
 )

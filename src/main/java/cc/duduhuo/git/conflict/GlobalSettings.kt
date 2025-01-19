@@ -16,6 +16,7 @@ import com.intellij.openapi.application.ApplicationManager
 object GlobalSettings {
 
     fun getPersistentState(): PersistentState {
+        // println(">>>> getPersistentState <<<<")
         val service = ApplicationManager.getApplication().getService(SettingsService::class.java)
         return service.state
     }

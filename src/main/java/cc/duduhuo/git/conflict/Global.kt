@@ -2,6 +2,7 @@ package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.model.ConflictItem
 import cc.duduhuo.git.conflict.model.MarkColor
+import cc.duduhuo.git.conflict.tool.delegate.CachedProperty
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.markup.RangeHighlighter
@@ -25,10 +26,14 @@ object Global {
     val documentListenerMap: MutableMap<Document, InDocumentListener> = mutableMapOf()
 
     // current color scheme
-    // must be var
-    var currentColor: MarkColor = BuiltInColor.DEFAULT
-        get() {
-            val state = GlobalSettings.getPersistentState()
-            return state.markColors[state.schemeName]!!.toMarkColor()
-        }
+    var currentColor: MarkColor by CachedProperty {
+        val state = GlobalSettings.getPersistentState()
+        state.markColors[state.schemeName]!!.toMarkColor()
+    }
+
+    // Whether automatically detects conflicts when a file is opened
+    var autoDetectConflictsWhenFileOpened: Boolean by CachedProperty {
+        val state = GlobalSettings.getPersistentState()
+        state.autoDetectConflictsWhenFileOpened
+    }
 }

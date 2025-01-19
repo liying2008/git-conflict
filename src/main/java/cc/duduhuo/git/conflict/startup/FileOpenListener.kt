@@ -1,5 +1,6 @@
 package cc.duduhuo.git.conflict.startup
 
+import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
 import cc.duduhuo.git.conflict.tool.ext.addInDocumentListenerIfNot
@@ -23,6 +24,9 @@ class FileOpenListener : FileEditorManagerListener {
         editorsWithProviders: MutableList<FileEditorWithProvider>
     ) {
         super.fileOpenedSync(source, file, editorsWithProviders)
+        if (!Global.autoDetectConflictsWhenFileOpened) {
+            return
+        }
         if (file.fileType.isBinary) {
             return
         }

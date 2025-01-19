@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.components.JBLabel;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -34,4 +35,5 @@ public abstract class ColorSettingsPanel implements SearchableConfigurable {
     protected JLabel lbCommonHeader;
     protected JLabel lbCommonContentBackground;
     protected JLabel lbCommonContent;
+    protected JCheckBox cbAutoDetectConflictsWhenFileOpened;
 }
