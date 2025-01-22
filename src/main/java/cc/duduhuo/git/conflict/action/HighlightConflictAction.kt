@@ -28,8 +28,12 @@ class HighlightConflictAction : AnAction() {
             // all editors with conflicts
             val editors = Global.highlighterMap.filter { it.value.isNotEmpty() }.map { it.key }
             editors.forEach {
-                // DocumentTools.showConflict() 会修改 Global.highlighterMap，所以不能直接在迭代 Global.highlighterMap 时调用，会导致 ConcurrentModificationException
-                DocumentTools.showConflict(it)
+                // DocumentTools.refreshHighlighters() 会修改 Global.highlighterMap，所以不能直接在迭代 Global.highlighterMap 时调用，会导致 ConcurrentModificationException
+                val conflictItems = Global.conflictItemMap[it.document]
+                if (conflictItems.isNullOrEmpty()) {
+                    return@forEach
+                }
+                DocumentTools.refreshHighlighters(arrayOf(it), conflictItems)
             }
         }
     }
@@ -39,7 +43,7 @@ class HighlightConflictAction : AnAction() {
         val editor = e.getData(CommonDataKeys.EDITOR) ?: return
         val document = editor.document
 
-        val conflictsCount = DocumentTools.showConflict(editor)
+        val conflictsCount = DocumentTools.showConflict(document, project)
 
         val fileEditorManager = FileEditorManager.getInstance(project)
         val selectedEditor = fileEditorManager.selectedEditor!!
@@ -77,7 +81,7 @@ class HighlightConflictAction : AnAction() {
             )
         )
         // Add document listener
-        document.addInDocumentListenerIfNot(editor)
+        document.addInDocumentListenerIfNot(document, project)
     }
 
     override fun update(e: AnActionEvent) {

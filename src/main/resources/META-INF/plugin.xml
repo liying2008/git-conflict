@@ -23,7 +23,7 @@
                 serviceImplementation="cc.duduhuo.git.conflict.setting.SettingsService"/>
     </extensions>
     <applicationListeners>
-        <listener class="cc.duduhuo.git.conflict.startup.FileOpenListener"
+        <listener class="cc.duduhuo.git.conflict.startup.FileOpenAndCloseListener"
                   topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </applicationListeners>
     <actions>

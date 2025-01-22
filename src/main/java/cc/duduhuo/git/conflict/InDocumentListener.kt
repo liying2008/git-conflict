@@ -2,9 +2,10 @@ package cc.duduhuo.git.conflict
 
 import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.ext.removeInDocumentListenerIfExist
-import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.event.DocumentEvent
 import com.intellij.openapi.editor.event.DocumentListener
+import com.intellij.openapi.project.Project
 
 /**
  * =======================================================
@@ -14,16 +15,13 @@ import com.intellij.openapi.editor.event.DocumentListener
  * Remarks:
  * =======================================================
  */
-class InDocumentListener(private val editor: Editor) : DocumentListener {
+class InDocumentListener(private val document: Document, private val project: Project) : DocumentListener {
 
     override fun documentChanged(event: DocumentEvent) {
-        if (editor.isDisposed) {
-            println("editor is disposed: $editor")
-            return
-        }
-        val conflictsCount = DocumentTools.showConflict(editor)
+        // println("documentChanged: ${document}, ${event}")
+        // TODO highlight conflicts only when the document has highlighters
+        val conflictsCount = DocumentTools.showConflict(document, project)
         if (conflictsCount == 0) {
-            val document = editor.document
             // remove document listener
             document.removeInDocumentListenerIfExist()
         }

@@ -14,3 +14,12 @@ fun Editor.removeConflictHighlightersIfAny() {
     }
     Global.highlighterMap.remove(this)
 }
+
+/**
+ * Removes all conflict highlighters from each editor in this array if they exist.
+ */
+fun Array<Editor>.removeConflictHighlightersIfAny() {
+    forEach {
+        it.removeConflictHighlightersIfAny()
+    }
+}

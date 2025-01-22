@@ -3,7 +3,7 @@ package cc.duduhuo.git.conflict.tool.ext
 import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.InDocumentListener
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.project.Project
 
 
 /**
@@ -25,15 +25,16 @@ fun Document.removeInDocumentListenerIfExist() {
  *
  * If the document already has a listener, this method does nothing.
  *
- * @param editor the editor that owns the document
+ * @param document the document
+ * @param project the current project
  */
-fun Document.addInDocumentListenerIfNot(editor: Editor) {
+fun Document.addInDocumentListenerIfNot(document: Document, project: Project) {
     val oldListener = Global.documentListenerMap[this]
     if (oldListener != null) {
         // listener already exists, do nothing
         return
     }
-    val listener = InDocumentListener(editor)
+    val listener = InDocumentListener(document, project)
     this.addDocumentListener(listener)
     Global.documentListenerMap[this] = listener
 }

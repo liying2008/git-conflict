@@ -15,7 +15,7 @@ import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.fileEditor.ex.FileEditorWithProvider
 import com.intellij.openapi.vfs.VirtualFile
 
-class FileOpenListener : FileEditorManagerListener {
+class FileOpenAndCloseListener : FileEditorManagerListener {
 
     // fileOpenedSync 是同步触发的，在文件被打开并且在 IDE 内部完成了所有相关的处理（如文件加载、初始化等）之后立即被调用。
     override fun fileOpenedSync(
@@ -56,7 +56,10 @@ class FileOpenListener : FileEditorManagerListener {
             return
         }
 
-        val conflictsCount = DocumentTools.showConflict(editor.editor)
+        val document = editor.editor.document
+        val project = source.project
+
+        val conflictsCount = DocumentTools.showConflict(document, project)
         if (conflictsCount == 0) {
             // no conflicts detected
             return
@@ -65,7 +68,7 @@ class FileOpenListener : FileEditorManagerListener {
             editor.file.name,
             "The document has $conflictsCount conflict(s).",
             NotificationType.WARNING,
-            source.project,
+            project,
             listOf(
                 object : NotificationAction("Open file") {
                     override fun actionPerformed(e: AnActionEvent, notification: Notification) {
@@ -76,8 +79,7 @@ class FileOpenListener : FileEditorManagerListener {
             )
         )
 
-        val document = editor.editor.document
         // add document listener
-        document.addInDocumentListenerIfNot(editor.editor)
+        document.addInDocumentListenerIfNot(document, project)
     }
 }

@@ -7,7 +7,9 @@ import cc.duduhuo.git.conflict.model.ConflictItem
 import cc.duduhuo.git.conflict.tool.ext.removeConflictHighlightersIfAny
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.EditorFactory
 import com.intellij.openapi.editor.markup.RangeHighlighter
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 
 /**
@@ -101,6 +103,103 @@ object DocumentTools {
         return conflictItems
     }
 
+    private fun highlightConflicts(
+        editors: Array<Editor>,
+        conflictItems: List<ConflictItem>
+    ): Map<Editor, List<RangeHighlighter>> {
+        val currentHeaderAttributes = TextAttr.getCurrentHeaderAttributes()
+        val currentContentAttributes = TextAttr.getCurrentContentAttributes()
+        val commonHeaderAttributes = TextAttr.getCommonHeaderAttributes()
+        val commonContentAttributes = TextAttr.getCommonContentAttributes()
+        val incomingHeaderAttributes = TextAttr.getIncomingHeaderAttributes()
+        val incomingContentAttributes = TextAttr.getIncomingContentAttributes()
+
+        // new highlighters in editors
+        val highlightersMap = mutableMapOf<Editor, List<RangeHighlighter>>()
+
+        editors.forEach { editor ->
+            val highlighters = mutableListOf<RangeHighlighter>()
+            val markupModel = editor.markupModel
+
+            conflictItems.forEach {
+                highlighters.add(
+                    markupModel.addLineHighlighter(
+                        it.currentChangeMarkerLineNum,
+                        Constants.HIGHLIGHTER_LAYER,
+                        currentHeaderAttributes
+                    )
+                )
+                for (j in it.currentChangeStartLineNum until it.currentChangeEndLineNum) {
+                    highlighters.add(
+                        markupModel.addLineHighlighter(
+                            j,
+                            Constants.HIGHLIGHTER_LAYER,
+                            currentContentAttributes
+                        )
+                    )
+                }
+                if (it.commonMarkerLineNum > -1) {
+                    highlighters.add(
+                        markupModel.addLineHighlighter(
+                            it.commonMarkerLineNum,
+                            Constants.HIGHLIGHTER_LAYER,
+                            commonHeaderAttributes
+                        )
+                    )
+                    for (j in it.commonStartLineNum until it.commonEndLineNum) {
+                        highlighters.add(
+                            markupModel.addLineHighlighter(
+                                j,
+                                Constants.HIGHLIGHTER_LAYER,
+                                commonContentAttributes
+                            )
+                        )
+                    }
+                }
+
+                for (j in it.incomingChangeStartLineNum until it.incomingChangeEndLineNum) {
+                    highlighters.add(
+                        markupModel.addLineHighlighter(
+                            j,
+                            Constants.HIGHLIGHTER_LAYER,
+                            incomingContentAttributes
+                        )
+                    )
+                }
+                highlighters.add(
+                    markupModel.addLineHighlighter(
+                        it.incomingChangeMarkerLineNum,
+                        Constants.HIGHLIGHTER_LAYER,
+                        incomingHeaderAttributes
+                    )
+                )
+            }
+            highlightersMap[editor] = highlighters
+        }
+        return highlightersMap
+    }
+
+    /**
+     * Refreshes conflict highlighters for the given editors and conflict items.
+     *
+     * The existing conflict highlighters are first removed from the editors, and
+     * then new highlighters are created and added to the editors.
+     *
+     * @param editors the editors to be refreshed
+     * @param conflictItems the conflict items
+     */
+    fun refreshHighlighters(
+        editors: Array<Editor>,
+        conflictItems: List<ConflictItem>
+    ) {
+        editors.removeConflictHighlightersIfAny()
+
+        val highlightersMap = highlightConflicts(editors, conflictItems)
+        highlightersMap.forEach { (editor, highlighters) ->
+            Global.highlighterMap[editor] = highlighters
+        }
+    }
+
     /**
      * Gets the string of a conflict section in a document.
      *
@@ -159,89 +258,29 @@ object DocumentTools {
     /**
      * Displays conflicts in document.
      *
-     * @param editor
+     * @param document the document
+     * @param project the current project
      * @return number of conflicts
      */
-    fun showConflict(editor: Editor): Int {
-        val document = editor.document
+    fun showConflict(document: Document, project: Project): Int {
+        val editorFactory = EditorFactory.getInstance()
+        val editors = editorFactory.getEditors(document, project)
         val text = document.text
 
         val conflictItems = detectConflicts(text)
 
-        editor.removeConflictHighlightersIfAny()
+        editors.removeConflictHighlightersIfAny()
         Global.conflictItemMap.remove(document)
 
         if (conflictItems.isEmpty()) {
             return 0
         }
 
-        val currentHeaderAttributes = TextAttr.getCurrentHeaderAttributes()
-        val currentContentAttributes = TextAttr.getCurrentContentAttributes()
-        val commonHeaderAttributes = TextAttr.getCommonHeaderAttributes()
-        val commonContentAttributes = TextAttr.getCommonContentAttributes()
-        val incomingHeaderAttributes = TextAttr.getIncomingHeaderAttributes()
-        val incomingContentAttributes = TextAttr.getIncomingContentAttributes()
-
-        // new highlighters in editor
-        val highlighters = mutableListOf<RangeHighlighter>()
-
-        val markupModel = editor.markupModel
-
-        conflictItems.forEach {
-            highlighters.add(
-                markupModel.addLineHighlighter(
-                    it.currentChangeMarkerLineNum,
-                    Constants.HIGHLIGHTER_LAYER,
-                    currentHeaderAttributes
-                )
-            )
-            for (j in it.currentChangeStartLineNum until it.currentChangeEndLineNum) {
-                highlighters.add(
-                    markupModel.addLineHighlighter(
-                        j,
-                        Constants.HIGHLIGHTER_LAYER,
-                        currentContentAttributes
-                    )
-                )
-            }
-            if (it.commonMarkerLineNum > -1) {
-                highlighters.add(
-                    markupModel.addLineHighlighter(
-                        it.commonMarkerLineNum,
-                        Constants.HIGHLIGHTER_LAYER,
-                        commonHeaderAttributes
-                    )
-                )
-                for (j in it.commonStartLineNum until it.commonEndLineNum) {
-                    highlighters.add(
-                        markupModel.addLineHighlighter(
-                            j,
-                            Constants.HIGHLIGHTER_LAYER,
-                            commonContentAttributes
-                        )
-                    )
-                }
-            }
-
-            for (j in it.incomingChangeStartLineNum until it.incomingChangeEndLineNum) {
-                highlighters.add(
-                    markupModel.addLineHighlighter(
-                        j,
-                        Constants.HIGHLIGHTER_LAYER,
-                        incomingContentAttributes
-                    )
-                )
-            }
-            highlighters.add(
-                markupModel.addLineHighlighter(
-                    it.incomingChangeMarkerLineNum,
-                    Constants.HIGHLIGHTER_LAYER,
-                    incomingHeaderAttributes
-                )
-            )
+        val highlightersMap = highlightConflicts(editors, conflictItems)
+        highlightersMap.forEach { (editor, highlighters) ->
+            Global.highlighterMap[editor] = highlighters
         }
 
-        Global.highlighterMap[editor] = highlighters
         Global.conflictItemMap[document] = conflictItems
         return conflictItems.size
     }
