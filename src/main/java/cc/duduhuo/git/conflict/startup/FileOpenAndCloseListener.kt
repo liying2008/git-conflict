@@ -4,6 +4,7 @@ import cc.duduhuo.git.conflict.Global
 import cc.duduhuo.git.conflict.tool.DocumentTools
 import cc.duduhuo.git.conflict.tool.NotificationTools.showNotification
 import cc.duduhuo.git.conflict.tool.ext.addInDocumentListenerIfNot
+import cc.duduhuo.git.conflict.tool.ext.removeInDocumentListenerIfExist
 import com.intellij.largeFilesEditor.editor.LargeFileEditor
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
@@ -24,9 +25,6 @@ class FileOpenAndCloseListener : FileEditorManagerListener {
         editorsWithProviders: MutableList<FileEditorWithProvider>
     ) {
         super.fileOpenedSync(source, file, editorsWithProviders)
-        if (!Global.autoDetectConflictsWhenFileOpened) {
-            return
-        }
         if (file.fileType.isBinary) {
             return
         }
@@ -35,20 +33,22 @@ class FileOpenAndCloseListener : FileEditorManagerListener {
         if (editor is LargeFileEditor) {
             // is a large file
             // LargeFileEditor is not a TextEditor
-            showNotification(
-                editor.file.name,
-                "File too large and does not perform conflict detection.",
-                NotificationType.INFORMATION,
-                source.project,
-                listOf(
-                    object : NotificationAction("Open file") {
-                        override fun actionPerformed(e: AnActionEvent, notification: Notification) {
-                            source.openFile(editor.file, true)
-                            notification.expire()  // close notification
+            if (Global.autoDetectConflictsWhenFileOpened) {
+                showNotification(
+                    editor.file.name,
+                    "File too large and does not perform conflict detection.",
+                    NotificationType.INFORMATION,
+                    source.project,
+                    listOf(
+                        object : NotificationAction("Open file") {
+                            override fun actionPerformed(e: AnActionEvent, notification: Notification) {
+                                source.openFile(editor.file, true)
+                                notification.expire()  // close notification
+                            }
                         }
-                    }
+                    )
                 )
-            )
+            }
             return
         }
         if (editor !is TextEditor) {
@@ -57,6 +57,10 @@ class FileOpenAndCloseListener : FileEditorManagerListener {
         }
 
         val document = editor.editor.document
+        if (!Global.autoDetectConflictsWhenFileOpened) {
+            document.removeInDocumentListenerIfExist()
+            return
+        }
         val project = source.project
 
         val conflictsCount = DocumentTools.showConflict(document, project)
