@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.kotlin.jvm") version "2.1.0"
+    id("org.jetbrains.intellij.platform") version "2.5.0"
 }
 
 group = "cc.duduhuo"
@@ -11,16 +11,33 @@ repositories {
     maven(url = "https://maven.aliyun.com/repository/public")
     maven(url = "https://maven.aliyun.com/repository/gradle-plugin")
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2022.3")
-    // version.set("2024.2.3") // for testing in new version
-    type.set("IC") // Target IDE Platform
+// Configure IntelliJ Platform Gradle Plugin
+// Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
+dependencies {
+    intellijPlatform {
+        create("IC", "2022.3")
+        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+        // Add necessary plugin dependencies for compilation here, example:
+        // bundledPlugin("com.intellij.java")
+    }
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        ideaVersion {
+            // see: https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html
+            sinceBuild = "223"
+            untilBuild = provider { null }
+        }
+        description.set(file("description.html").readText())
+        changeNotes.set(file("changeNotes.html").readText())
+    }
 }
 
 tasks {
@@ -28,17 +45,6 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "17"
         targetCompatibility = "17"
-    }
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-    patchPluginXml {
-        // please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description
-        sinceBuild.set("223")
-        untilBuild.set("")
-        pluginDescription.set(file("description.html").readText())
-        changeNotes.set(file("changeNotes.html").readText())
     }
 
     signPlugin {
@@ -49,5 +55,11 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
